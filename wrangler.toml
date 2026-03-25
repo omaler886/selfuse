@@ -1,0 +1,11 @@
+name = "private-nav-worker"
+main = "worker.js"
+compatibility_date = "2026-03-25"
+
+[[kv_namespaces]]
+binding = "NAV_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+[vars]
+# 在 Cloudflare Dashboard 或 wrangler secret 中配置
+# wrangler secret put ACCESS_PASSWORD

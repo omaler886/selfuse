@@ -1,0 +1,338 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain_suffix": "jp"
+    },
+    {
+      "domain_suffix": "co.jp"
+    },
+    {
+      "domain_suffix": "ne.jp"
+    },
+    {
+      "domain_suffix": "or.jp"
+    },
+    {
+      "domain_suffix": "go.jp"
+    },
+    {
+      "domain_suffix": "ac.jp"
+    },
+    {
+      "domain_suffix": "ed.jp"
+    },
+    {
+      "domain_suffix": "gr.jp"
+    },
+    {
+      "domain_suffix": "lg.jp"
+    },
+    {
+      "domain_suffix": "tokyo"
+    },
+    {
+      "domain_suffix": "osaka"
+    },
+    {
+      "domain_suffix": "nagoya"
+    },
+    {
+      "domain_suffix": "yokohama"
+    },
+    {
+      "domain_suffix": "okinawa"
+    },
+    {
+      "domain_suffix": "kyoto"
+    },
+    {
+      "domain_suffix": "sapporo"
+    },
+    {
+      "domain_suffix": "hiroshima"
+    },
+    {
+      "domain": "yahoo.co.jp"
+    },
+    {
+      "domain": "rakuten.co.jp"
+    },
+    {
+      "domain": "rakuten.ne.jp"
+    },
+    {
+      "domain": "paypay.ne.jp"
+    },
+    {
+      "domain": "mercari.com"
+    },
+    {
+      "domain": "jp.mercari.com"
+    },
+    {
+      "domain": "line.me"
+    },
+    {
+      "domain": "dmm.com"
+    },
+    {
+      "domain": "nhk.or.jp"
+    },
+    {
+      "domain": "nikkei.com"
+    },
+    {
+      "domain": "asahi.com"
+    },
+    {
+      "domain": "yomiuri.co.jp"
+    },
+    {
+      "domain": "mainichi.jp"
+    },
+    {
+      "domain": "abema.tv"
+    },
+    {
+      "domain": "tver.jp"
+    },
+    {
+      "domain": "niconico.jp"
+    },
+    {
+      "domain": "nicovideo.jp"
+    },
+    {
+      "domain": "docomo.ne.jp"
+    },
+    {
+      "domain": "softbank.jp"
+    },
+    {
+      "domain": "auone.jp"
+    },
+    {
+      "domain": "ntt.com"
+    },
+    {
+      "domain": "nintendo.co.jp"
+    },
+    {
+      "domain": "sony.jp"
+    },
+    {
+      "domain": "sony.co.jp"
+    },
+    {
+      "domain": "playstation.com"
+    },
+    {
+      "domain": "tabelog.com"
+    },
+    {
+      "domain": "kakaku.com"
+    },
+    {
+      "domain": "jalan.net"
+    },
+    {
+      "domain": "froma.com"
+    },
+    {
+      "domain": "townwork.net"
+    },
+    {
+      "domain": "job.rikunabi.com"
+    },
+    {
+      "domain": "carsensor.net"
+    },
+    {
+      "domain": "carsensor-edge.net"
+    },
+    {
+      "domain": "zexy.net"
+    },
+    {
+      "domain": "livedoor.com"
+    },
+    {
+      "domain": "gunosy.com"
+    },
+    {
+      "domain": "pixiv.net"
+    },
+    {
+      "domain": "l-tike.com"
+    },
+    {
+      "domain": "5ch.io"
+    },
+    {
+      "domain": "shonenjumpplus.com"
+    },
+    {
+      "domain": "comic-walker.com"
+    },
+    {
+      "domain": "id.comic-walker.com"
+    },
+    {
+      "domain": "comic-gardo.com"
+    },
+    {
+      "domain": "syosetu.com"
+    },
+    {
+      "domain": "nar.jp"
+    },
+    {
+      "domain": "natalie.mu"
+    },
+    {
+      "domain": "bookmeter.com"
+    },
+    {
+      "domain": "piccoma.com"
+    },
+    {
+      "domain_suffix": "yahoo.co.jp"
+    },
+    {
+      "domain_suffix": "rakuten.co.jp"
+    },
+    {
+      "domain_suffix": "rakuten.ne.jp"
+    },
+    {
+      "domain_suffix": "paypay.ne.jp"
+    },
+    {
+      "domain_suffix": "line.me"
+    },
+    {
+      "domain_suffix": "line-apps.com"
+    },
+    {
+      "domain_suffix": "dmm.com"
+    },
+    {
+      "domain_suffix": "nhk.or.jp"
+    },
+    {
+      "domain_suffix": "nikkei.com"
+    },
+    {
+      "domain_suffix": "asahi.com"
+    },
+    {
+      "domain_suffix": "yomiuri.co.jp"
+    },
+    {
+      "domain_suffix": "mainichi.jp"
+    },
+    {
+      "domain_suffix": "abema.tv"
+    },
+    {
+      "domain_suffix": "tver.jp"
+    },
+    {
+      "domain_suffix": "niconico.jp"
+    },
+    {
+      "domain_suffix": "nicovideo.jp"
+    },
+    {
+      "domain_suffix": "docomo.ne.jp"
+    },
+    {
+      "domain_suffix": "softbank.jp"
+    },
+    {
+      "domain_suffix": "auone.jp"
+    },
+    {
+      "domain_suffix": "ntt.com"
+    },
+    {
+      "domain_suffix": "nintendo.co.jp"
+    },
+    {
+      "domain_suffix": "sony.jp"
+    },
+    {
+      "domain_suffix": "sony.co.jp"
+    },
+    {
+      "domain_suffix": "playstation.com"
+    },
+    {
+      "domain_suffix": "tabelog.com"
+    },
+    {
+      "domain_suffix": "kakaku.com"
+    },
+    {
+      "domain_suffix": "jalan.net"
+    },
+    {
+      "domain_suffix": "froma.com"
+    },
+    {
+      "domain_suffix": "townwork.net"
+    },
+    {
+      "domain_suffix": "job.rikunabi.com"
+    },
+    {
+      "domain_suffix": "carsensor.net"
+    },
+    {
+      "domain_suffix": "carsensor-edge.net"
+    },
+    {
+      "domain_suffix": "zexy.net"
+    },
+    {
+      "domain_suffix": "livedoor.com"
+    },
+    {
+      "domain_suffix": "gunosy.com"
+    },
+    {
+      "domain_suffix": "pixiv.net"
+    },
+    {
+      "domain_suffix": "comic-walker.com"
+    },
+    {
+      "domain_suffix": "comic-gardo.com"
+    },
+    {
+      "domain_suffix": "manga.line.me"
+    },
+    {
+      "domain_suffix": "syosetu.com"
+    },
+    {
+      "domain_suffix": "nar.jp"
+    },
+    {
+      "domain_suffix": "natalie.mu"
+    },
+    {
+      "domain_suffix": "bookmeter.com"
+    },
+    {
+      "domain_suffix": "piccoma.com"
+    },
+    {
+      "domain_suffix": "shonenjumpplus.com"
+    },
+    {
+      "domain_suffix": "5ch.io"
+    }
+  ]
+}

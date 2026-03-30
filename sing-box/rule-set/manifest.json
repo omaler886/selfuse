@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-03-30T15:16:43.106504+00:00",
+  "generated_at_utc": "2026-03-30T15:24:55.548994+00:00",
   "count": 45,
   "items": [
     {
@@ -75,11 +75,11 @@
       "type": "mirrored-remote"
     },
     {
-      "tag": "direct_custom",
-      "binary_file": "sing-box/rule-set/direct_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/direct_custom.srs",
+      "tag": "direct_domains",
+      "binary_file": "sing-box/rule-set/direct_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/direct_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/direct_custom.json"
+      "source_file": "sing-box/rule-source/direct_domains.json"
     },
     {
       "tag": "private",
@@ -130,39 +130,39 @@
       "type": "mirrored-remote"
     },
     {
-      "tag": "ix_custom",
-      "binary_file": "sing-box/rule-set/ix_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ix_custom.srs",
+      "tag": "ix_domains",
+      "binary_file": "sing-box/rule-set/ix_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ix_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/ix_custom.json"
+      "source_file": "sing-box/rule-source/ix_domains.json"
     },
     {
-      "tag": "flow",
-      "binary_file": "sing-box/rule-set/flow.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/flow.srs",
+      "tag": "flow_domains",
+      "binary_file": "sing-box/rule-set/flow_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/flow_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/flow.json"
+      "source_file": "sing-box/rule-source/flow_domains.json"
     },
     {
-      "tag": "hk_b_custom",
-      "binary_file": "sing-box/rule-set/hk_b_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hk_b_custom.srs",
+      "tag": "hongkong_balancer_domains",
+      "binary_file": "sing-box/rule-set/hongkong_balancer_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hongkong_balancer_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/hk_b_custom.json"
+      "source_file": "sing-box/rule-source/hongkong_balancer_domains.json"
     },
     {
-      "tag": "hk_custom",
-      "binary_file": "sing-box/rule-set/hk_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hk_custom.srs",
+      "tag": "hongkong_domains",
+      "binary_file": "sing-box/rule-set/hongkong_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hongkong_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/hk_custom.json"
+      "source_file": "sing-box/rule-source/hongkong_domains.json"
     },
     {
-      "tag": "bwg_custom",
-      "binary_file": "sing-box/rule-set/bwg_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/bwg_custom.srs",
+      "tag": "bwg_domains",
+      "binary_file": "sing-box/rule-set/bwg_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/bwg_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/bwg_custom.json"
+      "source_file": "sing-box/rule-source/bwg_domains.json"
     },
     {
       "tag": "ehentai",
@@ -177,11 +177,11 @@
       "type": "mirrored-remote"
     },
     {
-      "tag": "cdn_custom",
-      "binary_file": "sing-box/rule-set/cdn_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cdn_custom.srs",
+      "tag": "cdn_domains",
+      "binary_file": "sing-box/rule-set/cdn_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cdn_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/cdn_custom.json"
+      "source_file": "sing-box/rule-source/cdn_domains.json"
     },
     {
       "tag": "onedrive",
@@ -190,11 +190,11 @@
       "type": "mirrored-remote"
     },
     {
-      "tag": "us_custom",
-      "binary_file": "sing-box/rule-set/us_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/us_custom.srs",
+      "tag": "us_domains",
+      "binary_file": "sing-box/rule-set/us_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/us_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/us_custom.json"
+      "source_file": "sing-box/rule-source/us_domains.json"
     },
     {
       "tag": "talkatone",
@@ -209,11 +209,11 @@
       "type": "mirrored-remote"
     },
     {
-      "tag": "sakura_domian",
-      "binary_file": "sing-box/rule-set/sakura_domian.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/sakura_domian.srs",
+      "tag": "japan_domains",
+      "binary_file": "sing-box/rule-set/japan_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/japan_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/sakura_domian.json"
+      "source_file": "sing-box/rule-source/japan_domains.json"
     },
     {
       "tag": "dlsite",
@@ -222,11 +222,11 @@
       "type": "mirrored-remote"
     },
     {
-      "tag": "google_custom",
-      "binary_file": "sing-box/rule-set/google_custom.srs",
-      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_custom.srs",
+      "tag": "google_domains",
+      "binary_file": "sing-box/rule-set/google_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_domains.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/google_custom.json"
+      "source_file": "sing-box/rule-source/google_domains.json"
     },
     {
       "tag": "google_cn",

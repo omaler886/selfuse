@@ -1,342 +1,286 @@
 {
-  "generated_at_utc": "2026-03-30T15:04:52.356117+00:00",
-  "count": 56,
+  "generated_at_utc": "2026-03-30T15:16:43.106504+00:00",
+  "count": 45,
   "items": [
     {
-      "tag": "apple_ip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
-      "binary_file": "sing-box/rule-set/apple_ip.srs"
-    },
-    {
-      "tag": "apple_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
-      "binary_file": "sing-box/rule-set/apple_domain.srs"
-    },
-    {
-      "tag": "bahamut_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/bahamut.srs",
-      "binary_file": "sing-box/rule-set/bahamut_domain.srs"
-    },
-    {
-      "tag": "bilibili_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/bilibili.srs",
-      "binary_file": "sing-box/rule-set/bilibili_domain.srs"
+      "tag": "adguard_sdns",
+      "binary_file": "sing-box/rule-set/adguard_sdns.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/adguard_sdns.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "Ads",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ads.srs",
-      "binary_file": "sing-box/rule-set/Ads.srs"
-    },
-    {
-      "tag": "adguard_sdns",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/jinndi/adguard-filter-list-srs/releases/latest/download/adguard-filter-list.srs",
-      "binary_file": "sing-box/rule-set/adguard_sdns.srs"
-    },
-    {
-      "tag": "cn_ip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/cn.srs",
-      "binary_file": "sing-box/rule-set/cn_ip.srs"
+      "binary_file": "sing-box/rule-set/Ads.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/Ads.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "cn_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/cn.srs",
-      "binary_file": "sing-box/rule-set/cn_domain.srs"
-    },
-    {
-      "tag": "jp_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/liuyisi-afk/mihomo_self_rule/raw/refs/heads/main/jp_domain.srs",
-      "binary_file": "sing-box/rule-set/jp_domain.srs"
-    },
-    {
-      "tag": "google_ip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/google.srs",
-      "binary_file": "sing-box/rule-set/google_ip.srs"
-    },
-    {
-      "tag": "google_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/google.srs",
-      "binary_file": "sing-box/rule-set/google_domain.srs"
-    },
-    {
-      "tag": "netflix_ip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/netflix.srs",
-      "binary_file": "sing-box/rule-set/netflix_ip.srs"
-    },
-    {
-      "tag": "netflix_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/netflix.srs",
-      "binary_file": "sing-box/rule-set/netflix_domain.srs"
-    },
-    {
-      "tag": "openai_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/openai.srs",
-      "binary_file": "sing-box/rule-set/openai_domain.srs"
-    },
-    {
-      "tag": "proxy_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/geolocation-!cn.srs",
-      "binary_file": "sing-box/rule-set/proxy_domain.srs"
-    },
-    {
-      "tag": "ads",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ads.srs",
-      "binary_file": "sing-box/rule-set/ads.srs"
-    },
-    {
-      "tag": "telegram_ip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/telegram.srs",
-      "binary_file": "sing-box/rule-set/telegram_ip.srs"
-    },
-    {
-      "tag": "geosite_sina",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/SagerNet/sing-geosite/raw/refs/heads/rule-set/geosite-sina.srs",
-      "binary_file": "sing-box/rule-set/geosite_sina.srs"
-    },
-    {
-      "tag": "geosite_douyin",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/SagerNet/sing-geosite/raw/refs/heads/rule-set/geosite-douyin.srs",
-      "binary_file": "sing-box/rule-set/geosite_douyin.srs"
-    },
-    {
-      "tag": "geosite_xiaohongshu",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/SagerNet/sing-geosite/raw/refs/heads/rule-set/geosite-xiaohongshu.srs",
-      "binary_file": "sing-box/rule-set/geosite_xiaohongshu.srs"
-    },
-    {
-      "tag": "geosite_zhihu",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/SagerNet/sing-geosite/raw/refs/heads/rule-set/geosite-zhihu.srs",
-      "binary_file": "sing-box/rule-set/geosite_zhihu.srs"
-    },
-    {
-      "tag": "geoip-jp",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo-lite/geoip/jp.srs",
-      "binary_file": "sing-box/rule-set/geoip-jp.srs"
-    },
-    {
-      "tag": "telegram_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/telegram.srs",
-      "binary_file": "sing-box/rule-set/telegram_domain.srs"
-    },
-    {
-      "tag": "youtube_domain",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/youtube.srs",
-      "binary_file": "sing-box/rule-set/youtube_domain.srs"
+      "binary_file": "sing-box/rule-set/cn_domain.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cn_domain.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "huya_pcdn",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/79279emtion/sing-box_pcdn/raw/refs/heads/main/huya-pcdn.srs",
-      "binary_file": "sing-box/rule-set/huya_pcdn.srs"
+      "binary_file": "sing-box/rule-set/huya_pcdn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/huya_pcdn.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "bilibili_pcdn",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/79279emtion/sing-box_pcdn/raw/refs/heads/main/bilibil-pcdn.srs",
-      "binary_file": "sing-box/rule-set/bilibili_pcdn.srs"
-    },
-    {
-      "tag": "http_dns",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/79279emtion/sing-box_pcdn/raw/refs/heads/main/HTTPDNS.srs",
-      "binary_file": "sing-box/rule-set/http_dns.srs"
-    },
-    {
-      "tag": "private",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/private.srs",
-      "binary_file": "sing-box/rule-set/private.srs"
-    },
-    {
-      "tag": "private-ip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/private.srs",
-      "binary_file": "sing-box/rule-set/private-ip.srs"
-    },
-    {
-      "tag": "fcm",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/googlefcm.srs",
-      "binary_file": "sing-box/rule-set/fcm.srs"
-    },
-    {
-      "tag": "cn-game",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/games-cn.srs",
-      "binary_file": "sing-box/rule-set/cn-game.srs"
-    },
-    {
-      "tag": "applications",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/applications.srs",
-      "binary_file": "sing-box/rule-set/applications.srs"
-    },
-    {
-      "tag": "trackerslist",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/trackerslist.srs",
-      "binary_file": "sing-box/rule-set/trackerslist.srs"
-    },
-    {
-      "tag": "epicgames",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/epicgames.srs",
-      "binary_file": "sing-box/rule-set/epicgames.srs"
-    },
-    {
-      "tag": "google_cn",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/google-cn.srs",
-      "binary_file": "sing-box/rule-set/google_cn.srs"
-    },
-    {
-      "tag": "talkatone",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/talkatone.srs",
-      "binary_file": "sing-box/rule-set/talkatone.srs"
-    },
-    {
-      "tag": "spotify",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/spotify.srs",
-      "binary_file": "sing-box/rule-set/spotify.srs"
-    },
-    {
-      "tag": "ai",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs",
-      "binary_file": "sing-box/rule-set/ai.srs"
-    },
-    {
-      "tag": "onedrive",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/onedrive.srs",
-      "binary_file": "sing-box/rule-set/onedrive.srs"
+      "binary_file": "sing-box/rule-set/bilibili_pcdn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/bilibili_pcdn.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "httpdns-cn@ads",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-httpdns-cn@ads.srs",
-      "binary_file": "sing-box/rule-set/httpdns-cn@ads.srs"
+      "binary_file": "sing-box/rule-set/httpdns-cn@ads.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/httpdns-cn%40ads.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ads",
+      "binary_file": "sing-box/rule-set/ads.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ads.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "ad",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ads-all.srs",
-      "binary_file": "sing-box/rule-set/ad.srs"
-    },
-    {
-      "tag": "geolocation-!cn",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/geolocation-!cn.srs",
-      "binary_file": "sing-box/rule-set/geolocation-!cn.srs"
+      "binary_file": "sing-box/rule-set/ad.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ad.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "zhihu",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/zhihu.srs",
-      "binary_file": "sing-box/rule-set/zhihu.srs"
+      "binary_file": "sing-box/rule-set/zhihu.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/zhihu.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "xiaohongshu",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/xiaohongshu.srs",
-      "binary_file": "sing-box/rule-set/xiaohongshu.srs"
+      "binary_file": "sing-box/rule-set/xiaohongshu.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/xiaohongshu.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "DouYin",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/douyin.srs",
-      "binary_file": "sing-box/rule-set/DouYin.srs"
+      "binary_file": "sing-box/rule-set/DouYin.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/DouYin.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "sina",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/sina.srs",
-      "binary_file": "sing-box/rule-set/sina.srs"
+      "binary_file": "sing-box/rule-set/sina.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/sina.srs",
+      "type": "mirrored-remote"
     },
     {
-      "tag": "telegramip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/telegram.srs",
-      "binary_file": "sing-box/rule-set/telegramip.srs"
+      "tag": "direct_custom",
+      "binary_file": "sing-box/rule-set/direct_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/direct_custom.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/direct_custom.json"
     },
     {
-      "tag": "telegram",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/telegram.srs",
-      "binary_file": "sing-box/rule-set/telegram.srs"
+      "tag": "private",
+      "binary_file": "sing-box/rule-set/private.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/private.srs",
+      "type": "mirrored-remote"
     },
     {
-      "tag": "google",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/google.srs",
-      "binary_file": "sing-box/rule-set/google.srs"
-    },
-    {
-      "tag": "dlsite",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/dlsite.srs",
-      "binary_file": "sing-box/rule-set/dlsite.srs"
-    },
-    {
-      "tag": "ehentai",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/ehentai.srs",
-      "binary_file": "sing-box/rule-set/ehentai.srs"
-    },
-    {
-      "tag": "netflix",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/netflix.srs",
-      "binary_file": "sing-box/rule-set/netflix.srs"
-    },
-    {
-      "tag": "netflix-ip",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/netflix.srs",
-      "binary_file": "sing-box/rule-set/netflix-ip.srs"
+      "tag": "private-ip",
+      "binary_file": "sing-box/rule-set/private-ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/private-ip.srs",
+      "type": "mirrored-remote"
     },
     {
       "tag": "ntp",
-      "type": "mirrored-remote",
-      "source_url": "https://ajfoijaso.natvm.dpdns.org/114514@110/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ntp.srs",
-      "binary_file": "sing-box/rule-set/ntp.srs"
+      "binary_file": "sing-box/rule-set/ntp.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ntp.srs",
+      "type": "mirrored-remote"
     },
     {
-      "tag": "sakura_domian",
+      "tag": "applications",
+      "binary_file": "sing-box/rule-set/applications.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/applications.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "cn-game",
+      "binary_file": "sing-box/rule-set/cn-game.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cn-game.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "trackerslist",
+      "binary_file": "sing-box/rule-set/trackerslist.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/trackerslist.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "fcm",
+      "binary_file": "sing-box/rule-set/fcm.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/fcm.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "epicgames",
+      "binary_file": "sing-box/rule-set/epicgames.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/epicgames.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ix_custom",
+      "binary_file": "sing-box/rule-set/ix_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ix_custom.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/sakura_domian.json",
-      "binary_file": "sing-box/rule-set/sakura_domian.srs"
+      "source_file": "sing-box/rule-source/ix_custom.json"
     },
     {
       "tag": "flow",
+      "binary_file": "sing-box/rule-set/flow.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/flow.srs",
       "type": "inline-compiled",
-      "source_file": "sing-box/rule-source/flow.json",
-      "binary_file": "sing-box/rule-set/flow.srs"
+      "source_file": "sing-box/rule-source/flow.json"
+    },
+    {
+      "tag": "hk_b_custom",
+      "binary_file": "sing-box/rule-set/hk_b_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hk_b_custom.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/hk_b_custom.json"
+    },
+    {
+      "tag": "hk_custom",
+      "binary_file": "sing-box/rule-set/hk_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hk_custom.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/hk_custom.json"
+    },
+    {
+      "tag": "bwg_custom",
+      "binary_file": "sing-box/rule-set/bwg_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/bwg_custom.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/bwg_custom.json"
+    },
+    {
+      "tag": "ehentai",
+      "binary_file": "sing-box/rule-set/ehentai.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ehentai.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "netflix",
+      "binary_file": "sing-box/rule-set/netflix.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/netflix.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "cdn_custom",
+      "binary_file": "sing-box/rule-set/cdn_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cdn_custom.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/cdn_custom.json"
+    },
+    {
+      "tag": "onedrive",
+      "binary_file": "sing-box/rule-set/onedrive.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/onedrive.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "us_custom",
+      "binary_file": "sing-box/rule-set/us_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/us_custom.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/us_custom.json"
+    },
+    {
+      "tag": "talkatone",
+      "binary_file": "sing-box/rule-set/talkatone.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/talkatone.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "spotify",
+      "binary_file": "sing-box/rule-set/spotify.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/spotify.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "sakura_domian",
+      "binary_file": "sing-box/rule-set/sakura_domian.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/sakura_domian.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/sakura_domian.json"
+    },
+    {
+      "tag": "dlsite",
+      "binary_file": "sing-box/rule-set/dlsite.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/dlsite.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "google_custom",
+      "binary_file": "sing-box/rule-set/google_custom.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_custom.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/google_custom.json"
+    },
+    {
+      "tag": "google_cn",
+      "binary_file": "sing-box/rule-set/google_cn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_cn.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "google",
+      "binary_file": "sing-box/rule-set/google.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "telegram",
+      "binary_file": "sing-box/rule-set/telegram.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/telegram.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ai",
+      "binary_file": "sing-box/rule-set/ai.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ai.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "geolocation-!cn",
+      "binary_file": "sing-box/rule-set/geolocation-!cn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/geolocation-%21cn.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "google_ip",
+      "binary_file": "sing-box/rule-set/google_ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_ip.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "telegramip",
+      "binary_file": "sing-box/rule-set/telegramip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/telegramip.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "netflix-ip",
+      "binary_file": "sing-box/rule-set/netflix-ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/netflix-ip.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "cn_ip",
+      "binary_file": "sing-box/rule-set/cn_ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cn_ip.srs",
+      "type": "mirrored-remote"
     }
   ]
 }

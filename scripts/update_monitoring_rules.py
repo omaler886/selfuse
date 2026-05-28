@@ -34,6 +34,72 @@ OEM_TELEMETRY_PATTERN = re.compile(
 
 DOMAIN_PATTERN = re.compile(r"^(?:[a-z0-9-]+\.)+[a-z0-9-]+$", re.IGNORECASE)
 
+NORMAL_SERVICE_DOMAINS = {
+    "10000.gd.cn",
+    "10010.com",
+    "10010.com.cn",
+    "10086.cn",
+    "10086api.com",
+    "12321.cn",
+    "12377.cn",
+    "12381.cn",
+    "17ce.com",
+    "189.cn",
+    "189cube.com",
+    "189cube.com.cn",
+    "96110.cn",
+    "andfx.cn",
+    "apnic.cn",
+    "beian.gov.cn",
+    "beian.miit.gov.cn",
+    "boce.com",
+    "cac.gov.cn",
+    "cert.cn",
+    "cert.org.cn",
+    "chinatelecom.cn",
+    "chinatelecom.com.cn",
+    "chinaunicom.cn",
+    "chinaunicom.com",
+    "chinaunicom.com.cn",
+    "chinaz.com",
+    "cmcc.cn",
+    "cncert.org.cn",
+    "cnnvd.org.cn",
+    "cnvd.org.cn",
+    "ctcdn.cn",
+    "ctcdn.com",
+    "ctexcel.com",
+    "ctyun.cn",
+    "cyberpolice.cn",
+    "cz88.net",
+    "idcquan.com",
+    "idcspy.com",
+    "internetpolice.cn",
+    "ip138.com",
+    "ipip.net",
+    "ipplus360.com",
+    "ipw.cn",
+    "isc.org.cn",
+    "itdog.cn",
+    "jubao.12377.cn",
+    "miit.gov.cn",
+    "mps.gov.cn",
+    "pucha.kaipuyun.cn",
+    "qq110.qq.com",
+    "samr.gov.cn",
+    "tool.chinaz.com",
+    "wanfangdata.com.cn",
+    "www.12321.cn",
+    "www.12377.cn",
+    "www.12381.cn",
+    "www.17ce.com",
+    "www.boce.com",
+    "www.itdog.cn",
+    "zjjubao.com",
+    "zx110.org",
+    "zzdx.gov.cn",
+}
+
 
 def fetch_text(url: str) -> str:
     with urllib.request.urlopen(url, timeout=45) as response:
@@ -158,7 +224,7 @@ def main() -> int:
     if len(sys.argv) != 2:
         raise SystemExit("Usage: update_monitoring_rules.py <mihomo-binary>")
 
-    domains = read_local_domains(DOMAIN_SOURCE) | read_upstream_domains()
+    domains = (read_local_domains(DOMAIN_SOURCE) | read_upstream_domains()) - NORMAL_SERVICE_DOMAINS
     networks = read_local_ipcidrs(IP_SOURCE)
 
     write_domain_list(domains)

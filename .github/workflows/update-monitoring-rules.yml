@@ -1,4 +1,4 @@
-name: Update monitoring MRS rules
+name: Update MRS rules
 
 on:
   schedule:
@@ -28,20 +28,36 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Update and compile rules
+      - name: Update monitoring rules
         run: python3 scripts/update_monitoring_rules.py ./mihomo
+
+      - name: Update ad and PCDN rules
+        run: python3 scripts/update_ad_pcdn_rules.py ./mihomo
 
       - name: Commit changes
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- monitoring-block.txt monitoring-block-ip.txt monitoring-block.mrs monitoring-block-ip.mrs; then
+          paths=(
+            monitoring-block.txt
+            monitoring-block-ip.txt
+            monitoring-block.mrs
+            monitoring-block-ip.mrs
+            ads-cn.txt
+            ads-global.txt
+            pcdn.txt
+            ads-cn.mrs
+            ads-global.mrs
+            pcdn.mrs
+          )
+
+          if git diff --quiet -- "${paths[@]}"; then
             echo "No rule changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add monitoring-block.txt monitoring-block-ip.txt monitoring-block.mrs monitoring-block-ip.mrs
-          git commit -m "Update monitoring MRS rules"
+          git add "${paths[@]}"
+          git commit -m "Update generated MRS rules"
           git push

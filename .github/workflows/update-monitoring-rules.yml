@@ -1,0 +1,47 @@
+name: Update monitoring MRS rules
+
+on:
+  schedule:
+    - cron: "23 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download mihomo
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="$(gh api repos/MetaCubeX/mihomo/releases/latest --jq '.tag_name')"
+          url="https://github.com/MetaCubeX/mihomo/releases/download/${tag}/mihomo-linux-amd64-v1-${tag}.gz"
+          curl -fsSL "$url" -o mihomo.gz
+          gzip -d mihomo.gz
+          chmod +x mihomo
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update and compile rules
+        run: python3 scripts/update_monitoring_rules.py ./mihomo
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- monitoring-block.txt monitoring-block-ip.txt monitoring-block.mrs monitoring-block-ip.mrs; then
+            echo "No rule changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add monitoring-block.txt monitoring-block-ip.txt monitoring-block.mrs monitoring-block-ip.mrs
+          git commit -m "Update monitoring MRS rules"
+          git push

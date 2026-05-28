@@ -39,13 +39,8 @@ jobs:
         run: |
           set -euo pipefail
           paths=(
-            monitoring-block.txt
-            monitoring-block-ip.txt
             monitoring-block.mrs
             monitoring-block-ip.mrs
-            ads-cn.txt
-            ads-global.txt
-            pcdn.txt
             ads-cn.mrs
             ads-global.mrs
             pcdn.mrs

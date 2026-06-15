@@ -47,12 +47,15 @@ jobs:
             ads-cn.mrs
             ads-global.mrs
             pcdn.mrs
+            full.mrs
+            lite.mrs
+            global.mrs
             ad-domain.mrs
             ad-ip.mrs
             rules/sources/ad-upstreams.json
           )
 
-          if git diff --quiet -- "${paths[@]}"; then
+          if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
             echo "No rule changes."
             exit 0
           fi

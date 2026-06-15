@@ -1,6 +1,383 @@
 {
-  "domainMrs": "ad-domain.mrs",
-  "ipMrs": "ad-ip.mrs",
+  "outputs": {
+    "full": {
+      "description": "All ad-blocking domain rules, including China, global, PCDN, monitoring, Wuming, and mihomo official ads.",
+      "mrs": "full.mrs",
+      "mrsAliases": [
+        "ad-domain.mrs"
+      ],
+      "sources": [
+        "ads-cn",
+        "ads-global",
+        "mihomo-category-ads-all",
+        "wuming-adguard-mobile",
+        "wuming-hosts",
+        "monitoring-block",
+        "pcdn",
+        "httpdns-cn@ads"
+      ],
+      "excludes": [
+        "wuming-whitelist"
+      ],
+      "subtractSources": [],
+      "counts": {
+        "ads-cn": 201155,
+        "ads-global": 274471,
+        "mihomo-category-ads-all": 894,
+        "wuming-adguard-mobile": 95160,
+        "wuming-hosts": 6054,
+        "monitoring-block": 134,
+        "pcdn": 33,
+        "httpdns-cn@ads": 49,
+        "exclude:wuming-whitelist": 6274,
+        "excluded": 6274,
+        "merged": 404019
+      }
+    },
+    "lite": {
+      "description": "China ad-blocking domains plus PCDN domains only.",
+      "mrs": "lite.mrs",
+      "mrsAliases": [],
+      "sources": [
+        "ads-cn",
+        "wuming-adguard-mobile",
+        "wuming-hosts",
+        "pcdn",
+        "httpdns-cn@ads"
+      ],
+      "excludes": [
+        "wuming-whitelist"
+      ],
+      "subtractSources": [],
+      "counts": {
+        "ads-cn": 201155,
+        "wuming-adguard-mobile": 95160,
+        "wuming-hosts": 6054,
+        "pcdn": 33,
+        "httpdns-cn@ads": 49,
+        "exclude:wuming-whitelist": 6274,
+        "excluded": 6274,
+        "merged": 215754
+      }
+    },
+    "global": {
+      "description": "Non-China ad domains from global sources; China and PCDN sources are subtracted.",
+      "mrs": "global.mrs",
+      "mrsAliases": [],
+      "sources": [
+        "ads-global",
+        "mihomo-category-ads-all"
+      ],
+      "excludes": [
+        "wuming-whitelist"
+      ],
+      "subtractSources": [
+        "ads-cn",
+        "wuming-adguard-mobile",
+        "wuming-hosts",
+        "pcdn",
+        "httpdns-cn@ads"
+      ],
+      "counts": {
+        "ads-global": 274471,
+        "mihomo-category-ads-all": 894,
+        "exclude:wuming-whitelist": 6274,
+        "subtract:ads-cn": 201155,
+        "subtract:wuming-adguard-mobile": 95160,
+        "subtract:wuming-hosts": 6054,
+        "subtract:pcdn": 33,
+        "subtract:httpdns-cn@ads": 49,
+        "excluded": 222028,
+        "merged": 188252
+      }
+    }
+  },
+  "legacyDomainMrs": "ad-domain.mrs",
+  "ipOutput": {
+    "description": "IP/CIDR ad-related blocklist.",
+    "mrs": "ad-ip.mrs",
+    "sources": [
+      "monitoring-block-ip"
+    ],
+    "counts": {
+      "monitoring-block-ip": 2,
+      "merged": 2
+    }
+  },
+  "sourceCatalog": [
+    {
+      "name": "ads-cn",
+      "behavior": "domain",
+      "kind": "mrs",
+      "region": "china",
+      "repository": "omaler886/selfuse",
+      "branch": "main",
+      "path": "ads-cn.mrs",
+      "localPath": "ads-cn.mrs",
+      "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/ads-cn.mrs",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "anti-AD EasyList",
+          "repository": null,
+          "branch": null,
+          "path": null,
+          "rawUrl": "https://anti-ad.net/easylist.txt",
+          "note": "Branchless upstream HTTP endpoint."
+        },
+        {
+          "name": "privacy-protection-tools anti-AD domains",
+          "repository": "privacy-protection-tools/anti-AD",
+          "branch": "master",
+          "path": "anti-ad-domains.txt",
+          "rawUrl": "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-domains.txt",
+          "note": null
+        },
+        {
+          "name": "Cats-Team AdRules DNS",
+          "repository": "Cats-Team/AdRules",
+          "branch": "main",
+          "path": "dns.txt",
+          "rawUrl": "https://raw.githubusercontent.com/Cats-Team/AdRules/main/dns.txt",
+          "note": null
+        },
+        {
+          "name": "selfuse curated China ads",
+          "repository": "omaler886/selfuse",
+          "branch": "main",
+          "path": "rules/sources/ads-cn-curated.txt",
+          "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/rules/sources/ads-cn-curated.txt",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "ads-global",
+      "behavior": "domain",
+      "kind": "mrs",
+      "region": "global",
+      "repository": "omaler886/selfuse",
+      "branch": "main",
+      "path": "ads-global.mrs",
+      "localPath": "ads-global.mrs",
+      "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/ads-global.mrs",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "Hagezi Pro only-domains",
+          "repository": "hagezi/dns-blocklists",
+          "branch": "main",
+          "path": "wildcard/pro-onlydomains.txt",
+          "rawUrl": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro-onlydomains.txt",
+          "note": null
+        },
+        {
+          "name": "Hagezi Ultimate only-domains",
+          "repository": "hagezi/dns-blocklists",
+          "branch": "main",
+          "path": "wildcard/ultimate-onlydomains.txt",
+          "rawUrl": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/ultimate-onlydomains.txt",
+          "note": null
+        },
+        {
+          "name": "selfuse curated global ads",
+          "repository": "omaler886/selfuse",
+          "branch": "main",
+          "path": "rules/sources/ads-global-curated.txt",
+          "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/rules/sources/ads-global-curated.txt",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "mihomo-category-ads-all",
+      "behavior": "domain",
+      "kind": "mrs",
+      "region": "global",
+      "repository": "MetaCubeX/meta-rules-dat",
+      "branch": "meta",
+      "path": "geo/geosite/category-ads-all.mrs",
+      "localPath": null,
+      "rawUrl": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ads-all.mrs",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "mihomo official category-ads-all MRS",
+          "repository": "MetaCubeX/meta-rules-dat",
+          "branch": "meta",
+          "path": "geo/geosite/category-ads-all.mrs",
+          "rawUrl": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ads-all.mrs",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "wuming-adguard-mobile",
+      "behavior": "domain",
+      "kind": "adguard-block",
+      "region": "china",
+      "repository": "Wuming155/China-AdGuard-Rules",
+      "branch": "main",
+      "path": "dist/adguard_rules_mobile.txt",
+      "localPath": null,
+      "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/adguard_rules_mobile.txt",
+      "note": "Only DNS-safe block rules are imported; cosmetic and scoped network rules are ignored.",
+      "upstreams": [
+        {
+          "name": "Wuming155 AdGuard mobile rules",
+          "repository": "Wuming155/China-AdGuard-Rules",
+          "branch": "main",
+          "path": "dist/adguard_rules_mobile.txt",
+          "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/adguard_rules_mobile.txt",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "wuming-hosts",
+      "behavior": "domain",
+      "kind": "hosts-block",
+      "region": "china",
+      "repository": "Wuming155/China-AdGuard-Rules",
+      "branch": "main",
+      "path": "dist/hosts_rules.txt",
+      "localPath": null,
+      "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/hosts_rules.txt",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "Wuming155 hosts rules",
+          "repository": "Wuming155/China-AdGuard-Rules",
+          "branch": "main",
+          "path": "dist/hosts_rules.txt",
+          "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/hosts_rules.txt",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "monitoring-block",
+      "behavior": "domain",
+      "kind": "mrs",
+      "region": "china",
+      "repository": "omaler886/selfuse",
+      "branch": "main",
+      "path": "monitoring-block.mrs",
+      "localPath": "monitoring-block.mrs",
+      "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/monitoring-block.mrs",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "CocoaDuck AntiAntiFraud",
+          "repository": "CocoaDuck/Snippets",
+          "branch": "master",
+          "path": "MihomoYAML/Source/Addition/AntiAntiFraud.yaml",
+          "rawUrl": "https://codeberg.org/CocoaDuck/Snippets/raw/master/MihomoYAML/Source/Addition/AntiAntiFraud.yaml",
+          "note": null
+        },
+        {
+          "name": "selfuse curated monitoring blocklist",
+          "repository": "omaler886/selfuse",
+          "branch": "main",
+          "path": "rules/sources/monitoring-block-curated.txt",
+          "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/rules/sources/monitoring-block-curated.txt",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "pcdn",
+      "behavior": "domain",
+      "kind": "mrs",
+      "region": "pcdn",
+      "repository": "omaler886/selfuse",
+      "branch": "main",
+      "path": "pcdn.mrs",
+      "localPath": "pcdn.mrs",
+      "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/pcdn.mrs",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "selfuse curated PCDN domains",
+          "repository": "omaler886/selfuse",
+          "branch": "main",
+          "path": "rules/sources/pcdn-curated.txt",
+          "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/rules/sources/pcdn-curated.txt",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "httpdns-cn@ads",
+      "behavior": "domain",
+      "kind": "mrs",
+      "region": "china",
+      "repository": "MetaCubeX/meta-rules-dat",
+      "branch": "meta",
+      "path": "geo/geosite/category-httpdns-cn@ads.mrs",
+      "localPath": null,
+      "rawUrl": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-httpdns-cn@ads.mrs",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "mihomo official category-httpdns-cn@ads list",
+          "repository": "MetaCubeX/meta-rules-dat",
+          "branch": "meta",
+          "path": "geo/geosite/category-httpdns-cn@ads.list",
+          "rawUrl": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-httpdns-cn@ads.list",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "wuming-whitelist",
+      "behavior": "domain",
+      "kind": "adguard-allow",
+      "region": "china",
+      "repository": "Wuming155/China-AdGuard-Rules",
+      "branch": "main",
+      "path": "dist/whitelist.txt",
+      "localPath": null,
+      "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/whitelist.txt",
+      "note": "Only DNS-safe @@ exceptions are used to subtract block domains.",
+      "upstreams": [
+        {
+          "name": "Wuming155 whitelist",
+          "repository": "Wuming155/China-AdGuard-Rules",
+          "branch": "main",
+          "path": "dist/whitelist.txt",
+          "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/whitelist.txt",
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "monitoring-block-ip",
+      "behavior": "ipcidr",
+      "kind": "mrs",
+      "region": "china",
+      "repository": "omaler886/selfuse",
+      "branch": "main",
+      "path": "monitoring-block-ip.mrs",
+      "localPath": "monitoring-block-ip.mrs",
+      "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/monitoring-block-ip.mrs",
+      "note": null,
+      "upstreams": [
+        {
+          "name": "selfuse curated monitoring IP blocklist",
+          "repository": "omaler886/selfuse",
+          "branch": "main",
+          "path": "rules/sources/monitoring-block-ip-curated.txt",
+          "rawUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/rules/sources/monitoring-block-ip-curated.txt",
+          "note": null
+        }
+      ]
+    }
+  ],
+  "sourceNotes": {
+    "wuming155": "Upstream README states no redistribution; verify permission before public publishing.",
+    "global": "global.mrs subtracts lite source domains to avoid China/PCDN overlap."
+  },
   "domainCounts": {
     "ads-cn": 201155,
     "ads-global": 274471,
@@ -16,86 +393,6 @@
   },
   "ipCounts": {
     "monitoring-block-ip": 2,
-    "excluded": 0,
     "merged": 2
-  },
-  "domainSources": [
-    {
-      "name": "ads-cn",
-      "behavior": "domain",
-      "kind": "mrs",
-      "path": "ads-cn.mrs",
-      "url": null
-    },
-    {
-      "name": "ads-global",
-      "behavior": "domain",
-      "kind": "mrs",
-      "path": "ads-global.mrs",
-      "url": null
-    },
-    {
-      "name": "mihomo-category-ads-all",
-      "behavior": "domain",
-      "kind": "mrs",
-      "path": null,
-      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ads-all.mrs"
-    },
-    {
-      "name": "wuming-adguard-mobile",
-      "behavior": "domain",
-      "kind": "adguard-block",
-      "path": null,
-      "url": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/adguard_rules_mobile.txt"
-    },
-    {
-      "name": "wuming-hosts",
-      "behavior": "domain",
-      "kind": "hosts-block",
-      "path": null,
-      "url": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/hosts_rules.txt"
-    },
-    {
-      "name": "monitoring-block",
-      "behavior": "domain",
-      "kind": "mrs",
-      "path": "monitoring-block.mrs",
-      "url": null
-    },
-    {
-      "name": "pcdn",
-      "behavior": "domain",
-      "kind": "mrs",
-      "path": "pcdn.mrs",
-      "url": null
-    },
-    {
-      "name": "httpdns-cn@ads",
-      "behavior": "domain",
-      "kind": "mrs",
-      "path": null,
-      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-httpdns-cn@ads.mrs"
-    }
-  ],
-  "domainExcludes": [
-    {
-      "name": "wuming-whitelist",
-      "behavior": "domain",
-      "kind": "adguard-allow",
-      "path": null,
-      "url": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/whitelist.txt"
-    }
-  ],
-  "ipSources": [
-    {
-      "name": "monitoring-block-ip",
-      "behavior": "ipcidr",
-      "kind": "mrs",
-      "path": "monitoring-block-ip.mrs",
-      "url": null
-    }
-  ],
-  "sourceNotes": {
-    "wuming155": "Upstream README states no redistribution; verify permission before public publishing."
   }
 }

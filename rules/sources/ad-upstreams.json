@@ -2,8 +2,8 @@
   "domainMrs": "ad-domain.mrs",
   "ipMrs": "ad-ip.mrs",
   "domainCounts": {
-    "ads-cn": 201183,
-    "ads-global": 270527,
+    "ads-cn": 201155,
+    "ads-global": 274471,
     "mihomo-category-ads-all": 894,
     "wuming-adguard-mobile": 95160,
     "wuming-hosts": 6054,
@@ -12,7 +12,7 @@
     "httpdns-cn@ads": 49,
     "exclude:wuming-whitelist": 6274,
     "excluded": 6274,
-    "merged": 400336
+    "merged": 404019
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

@@ -1,0 +1,101 @@
+{
+  "domainMrs": "ad-domain.mrs",
+  "ipMrs": "ad-ip.mrs",
+  "domainCounts": {
+    "ads-cn": 201183,
+    "ads-global": 270527,
+    "mihomo-category-ads-all": 894,
+    "wuming-adguard-mobile": 95160,
+    "wuming-hosts": 6054,
+    "monitoring-block": 134,
+    "pcdn": 33,
+    "httpdns-cn@ads": 49,
+    "exclude:wuming-whitelist": 6274,
+    "excluded": 6274,
+    "merged": 400336
+  },
+  "ipCounts": {
+    "monitoring-block-ip": 2,
+    "excluded": 0,
+    "merged": 2
+  },
+  "domainSources": [
+    {
+      "name": "ads-cn",
+      "behavior": "domain",
+      "kind": "mrs",
+      "path": "ads-cn.mrs",
+      "url": null
+    },
+    {
+      "name": "ads-global",
+      "behavior": "domain",
+      "kind": "mrs",
+      "path": "ads-global.mrs",
+      "url": null
+    },
+    {
+      "name": "mihomo-category-ads-all",
+      "behavior": "domain",
+      "kind": "mrs",
+      "path": null,
+      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ads-all.mrs"
+    },
+    {
+      "name": "wuming-adguard-mobile",
+      "behavior": "domain",
+      "kind": "adguard-block",
+      "path": null,
+      "url": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/adguard_rules_mobile.txt"
+    },
+    {
+      "name": "wuming-hosts",
+      "behavior": "domain",
+      "kind": "hosts-block",
+      "path": null,
+      "url": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/hosts_rules.txt"
+    },
+    {
+      "name": "monitoring-block",
+      "behavior": "domain",
+      "kind": "mrs",
+      "path": "monitoring-block.mrs",
+      "url": null
+    },
+    {
+      "name": "pcdn",
+      "behavior": "domain",
+      "kind": "mrs",
+      "path": "pcdn.mrs",
+      "url": null
+    },
+    {
+      "name": "httpdns-cn@ads",
+      "behavior": "domain",
+      "kind": "mrs",
+      "path": null,
+      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-httpdns-cn@ads.mrs"
+    }
+  ],
+  "domainExcludes": [
+    {
+      "name": "wuming-whitelist",
+      "behavior": "domain",
+      "kind": "adguard-allow",
+      "path": null,
+      "url": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/whitelist.txt"
+    }
+  ],
+  "ipSources": [
+    {
+      "name": "monitoring-block-ip",
+      "behavior": "ipcidr",
+      "kind": "mrs",
+      "path": "monitoring-block-ip.mrs",
+      "url": null
+    }
+  ],
+  "sourceNotes": {
+    "wuming155": "Upstream README states no redistribution; verify permission before public publishing."
+  }
+}

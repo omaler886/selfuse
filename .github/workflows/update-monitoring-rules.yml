@@ -49,6 +49,7 @@ jobs:
             pcdn.mrs
             ad-domain.mrs
             ad-ip.mrs
+            rules/sources/ad-upstreams.json
           )
 
           if git diff --quiet -- "${paths[@]}"; then

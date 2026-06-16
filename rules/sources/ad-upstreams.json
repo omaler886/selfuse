@@ -26,14 +26,14 @@
         "ads-cn": 201155,
         "ads-global": 274471,
         "mihomo-category-ads-all": 894,
-        "wuming-adguard-mobile": 95160,
+        "wuming-adguard-mobile": 86100,
         "wuming-hosts": 6054,
         "monitoring-block": 134,
         "pcdn": 33,
         "httpdns-cn@ads": 49,
-        "exclude:wuming-whitelist": 6274,
-        "excluded": 6274,
-        "merged": 404019
+        "exclude:wuming-whitelist": 2850,
+        "excluded": 2857,
+        "merged": 398069
       }
     },
     "lite": {
@@ -55,13 +55,13 @@
       "subtractSources": [],
       "counts": {
         "ads-cn": 201155,
-        "wuming-adguard-mobile": 95160,
+        "wuming-adguard-mobile": 86100,
         "wuming-hosts": 6054,
         "pcdn": 33,
         "httpdns-cn@ads": 49,
-        "exclude:wuming-whitelist": 6274,
-        "excluded": 6274,
-        "merged": 215754
+        "exclude:wuming-whitelist": 2850,
+        "excluded": 2857,
+        "merged": 209233
       }
     },
     "global": {
@@ -87,14 +87,14 @@
       "counts": {
         "ads-global": 274471,
         "mihomo-category-ads-all": 894,
-        "exclude:wuming-whitelist": 6274,
+        "exclude:wuming-whitelist": 2850,
         "subtract:ads-cn": 201155,
-        "subtract:wuming-adguard-mobile": 95160,
+        "subtract:wuming-adguard-mobile": 86100,
         "subtract:wuming-hosts": 6054,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 49,
-        "excluded": 222028,
-        "merged": 188252
+        "excluded": 212090,
+        "merged": 188823
       }
     }
   },
@@ -388,14 +388,14 @@
     "ads-cn": 201155,
     "ads-global": 274471,
     "mihomo-category-ads-all": 894,
-    "wuming-adguard-mobile": 95160,
+    "wuming-adguard-mobile": 86100,
     "wuming-hosts": 6054,
     "monitoring-block": 134,
     "pcdn": 33,
     "httpdns-cn@ads": 49,
-    "exclude:wuming-whitelist": 6274,
-    "excluded": 6274,
-    "merged": 404019
+    "exclude:wuming-whitelist": 2850,
+    "excluded": 2857,
+    "merged": 398069
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

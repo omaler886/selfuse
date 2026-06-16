@@ -1,5 +1,13 @@
 # selfuse rules
 
+## sing-box SRS 广告规则
+
+| 文件 | 范围 | Raw URL |
+| --- | --- | --- |
+| `sing-box/rule-set/full.srs` | 全去广告：合并中国、全球、PCDN、监控拦截、Wuming 和 mihomo 官方广告规则 | `https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/full.srs` |
+| `sing-box/rule-set/lite.srs` | 轻量去广告：只包含中国广告域名、HTTPDNS 中国广告域名和 PCDN 域名 | `https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/lite.srs` |
+| `sing-box/rule-set/global.srs` | 非中国地区广告域名：全球广告来源中减去 lite 范围，避免中国/PCDN 重叠 | `https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/global.srs` |
+
 ## Mihomo MRS 广告规则
 
 | 文件 | 范围 | Raw URL |
@@ -12,7 +20,7 @@
 
 ## 上游来源
 
-完整来源、分支、路径和计数写在 `rules/sources/ad-upstreams.json`。关键上游如下：
+完整来源、分支、路径、输出文件和计数写在 `rules/sources/ad-upstreams.json`。`outputs.full/lite/global` 同时记录 Mihomo MRS 和 sing-box SRS 产物。关键上游如下：
 
 | 来源 | 仓库/分支 | 路径或地址 |
 | --- | --- | --- |
@@ -32,10 +40,10 @@ Wuming155 上游 README 有再分发限制提示；公开托管前应确认使�
 
 ```bash
 python3 scripts/update_ad_pcdn_rules.py ./mihomo
-python3 scripts/update_merged_ad_rules.py ./mihomo
+python3 scripts/update_merged_ad_rules.py ./mihomo ./sing-box-bin
 ```
 
-`update_merged_ad_rules.py` 会生成 `full.mrs`、`lite.mrs`、`global.mrs`、`ad-domain.mrs`、`ad-ip.mrs`，并更新 `rules/sources/ad-upstreams.json`。
+`update_merged_ad_rules.py` 会生成 `full.mrs`、`lite.mrs`、`global.mrs`、`ad-domain.mrs`、`ad-ip.mrs`，同时生成 `sing-box/rule-set/full.srs`、`sing-box/rule-set/lite.srs`、`sing-box/rule-set/global.srs`，并更新 `rules/sources/ad-upstreams.json`。
 
 ## Cloudflare Worker
 

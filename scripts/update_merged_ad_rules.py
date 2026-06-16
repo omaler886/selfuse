@@ -25,6 +25,12 @@ GLOBAL_MRS = ROOT / "global.mrs"
 LEGACY_DOMAIN_MRS = ROOT / "ad-domain.mrs"
 IP_MRS = ROOT / "ad-ip.mrs"
 
+SING_BOX_RULE_SET_DIR = ROOT / "sing-box" / "rule-set"
+SING_BOX_SOURCE_DIR = BUILD_DIR / "sing-box-source"
+FULL_SRS = SING_BOX_RULE_SET_DIR / "full.srs"
+LITE_SRS = SING_BOX_RULE_SET_DIR / "lite.srs"
+GLOBAL_SRS = SING_BOX_RULE_SET_DIR / "global.srs"
+
 SELFUSE_RAW = "https://raw.githubusercontent.com/omaler886/selfuse/main"
 METACUBEX_RAW = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta"
 WUMING_RAW = "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main"
@@ -111,6 +117,7 @@ class DomainTarget:
         subtract_sources: Source inputs subtracted to enforce target scope.
         text_output: Temporary text rule output path.
         mrs_output: Public compiled MRS path.
+        srs_output: Public compiled sing-box SRS path.
         mrs_aliases: Additional compiled MRS paths with identical bytes.
         text_aliases: Additional text paths with identical rules.
 
@@ -125,6 +132,7 @@ class DomainTarget:
     subtract_sources: tuple[Source, ...]
     text_output: Path
     mrs_output: Path
+    srs_output: Path
     mrs_aliases: tuple[Path, ...] = ()
     text_aliases: tuple[Path, ...] = ()
 
@@ -418,6 +426,7 @@ DOMAIN_TARGETS = (
         subtract_sources=(),
         text_output=FULL_OUTPUT,
         mrs_output=FULL_MRS,
+        srs_output=FULL_SRS,
         mrs_aliases=(LEGACY_DOMAIN_MRS,),
     ),
     DomainTarget(
@@ -428,6 +437,7 @@ DOMAIN_TARGETS = (
         subtract_sources=(),
         text_output=LITE_OUTPUT,
         mrs_output=LITE_MRS,
+        srs_output=LITE_SRS,
     ),
     DomainTarget(
         name="global",
@@ -437,6 +447,7 @@ DOMAIN_TARGETS = (
         subtract_sources=LITE_SOURCES,
         text_output=GLOBAL_OUTPUT,
         mrs_output=GLOBAL_MRS,
+        srs_output=GLOBAL_SRS,
     ),
 )
 
@@ -461,6 +472,27 @@ def fetch_file(url: str, target: Path) -> None:
         target.write_bytes(response.read())
 
 
+def fetch_file_with_cache(url: str, target: Path) -> None:
+    """Purpose: download a remote input while preserving usable cached data.
+
+    Args:
+        url: Remote HTTP(S) URL to download.
+        target: Local cache path for downloaded bytes.
+
+    Returns:
+        None.
+    """
+
+    try:
+        fetch_file(url, target)
+        return
+    except Exception:
+        if target.exists():
+            return
+
+        raise
+
+
 def get_source_path(source: Source) -> Path:
     """Purpose: resolve a local or remote source into a local path.
 
@@ -479,7 +511,7 @@ def get_source_path(source: Source) -> Path:
 
     suffix = ".mrs" if source.kind == "mrs" else ".txt"
     target = BUILD_DIR / "raw" / f"{source.name}{suffix}"
-    fetch_file(source.url, target)
+    fetch_file_with_cache(source.url, target)
     return target
 
 
@@ -791,6 +823,52 @@ def write_rules(path: Path, title: str, rules: set[str]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_sing_box_source(path: Path, rules: set[str]) -> None:
+    """Purpose: write sing-box source JSON for domain suffix rules.
+
+    Args:
+        path: Source JSON path consumed by sing-box rule-set compile.
+        rules: Normalized domain rules to write as suffix matches.
+
+    Returns:
+        None.
+    """
+
+    if not rules:
+        raise ValueError(f"refusing to write empty sing-box source: {path}")
+
+    data = {
+        "version": 2,
+        "rules": [
+            {
+                "domain_suffix": sorted(rules),
+            }
+        ],
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
+
+
+def compile_srs(sing_box: str, source: Path, target: Path) -> None:
+    """Purpose: compile a sing-box source JSON file to binary SRS.
+
+    Args:
+        sing_box: sing-box executable path.
+        source: Source JSON rule-set path.
+        target: Binary SRS output path.
+
+    Returns:
+        None.
+    """
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.unlink(missing_ok=True)
+    subprocess.run(
+        [sing_box, "rule-set", "compile", str(source), "-o", str(target)],
+        check=True,
+    )
+
+
 def copy_outputs(source: Path, aliases: tuple[Path, ...]) -> None:
     """Purpose: copy one generated output to compatibility aliases.
 
@@ -808,11 +886,12 @@ def copy_outputs(source: Path, aliases: tuple[Path, ...]) -> None:
         alias.write_bytes(data)
 
 
-def build_domain_target(mihomo: str, target: DomainTarget, cache: dict[str, set[str]]) -> dict[str, int]:
+def build_domain_target(mihomo: str, sing_box: str, target: DomainTarget, cache: dict[str, set[str]]) -> dict[str, int]:
     """Purpose: build one domain target and return its rule counts.
 
     Args:
         mihomo: Mihomo executable path.
+        sing_box: sing-box executable path.
         target: Domain target build plan.
         cache: Mutable source rule cache.
 
@@ -835,6 +914,9 @@ def build_domain_target(mihomo: str, target: DomainTarget, cache: dict[str, set[
     copy_outputs(target.text_output, target.text_aliases)
     convert_ruleset(mihomo, "domain", "text", target.text_output, target.mrs_output)
     copy_outputs(target.mrs_output, target.mrs_aliases)
+    source_json = SING_BOX_SOURCE_DIR / f"{target.name}.json"
+    write_sing_box_source(source_json, rules)
+    compile_srs(sing_box, source_json, target.srs_output)
     return counts
 
 
@@ -929,6 +1011,8 @@ def format_target(target: DomainTarget, counts: dict[str, int]) -> dict[str, obj
     return {
         "description": target.description,
         "mrs": relative_path(target.mrs_output),
+        "srs": relative_path(target.srs_output),
+        "rawSrsUrl": f"{SELFUSE_RAW}/{relative_path(target.srs_output)}",
         "mrsAliases": [relative_path(path) for path in target.mrs_aliases],
         "sources": [source.name for source in target.sources],
         "excludes": [source.name for source in target.excludes],
@@ -974,7 +1058,7 @@ def write_manifest(domain_counts: dict[str, dict[str, int]], ip_counts: dict[str
 
 
 def main() -> int:
-    """Purpose: update full, lite, global, and IP MRS outputs.
+    """Purpose: update full, lite, global MRS/SRS outputs and IP MRS output.
 
     Args:
         None.
@@ -983,12 +1067,12 @@ def main() -> int:
         Process exit code.
     """
 
-    if len(sys.argv) != 2:
-        raise SystemExit("Usage: update_merged_ad_rules.py <mihomo-binary>")
+    if len(sys.argv) != 3:
+        raise SystemExit("Usage: update_merged_ad_rules.py <mihomo-binary> <sing-box-binary>")
 
     cache: dict[str, set[str]] = {}
     domain_counts = {
-        target.name: build_domain_target(sys.argv[1], target, cache)
+        target.name: build_domain_target(sys.argv[1], sys.argv[2], target, cache)
         for target in DOMAIN_TARGETS
     }
     ip_counts = build_ip_rules(sys.argv[1], cache)

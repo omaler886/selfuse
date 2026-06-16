@@ -3,6 +3,8 @@
     "full": {
       "description": "All ad-blocking domain rules, including China, global, PCDN, monitoring, Wuming, and mihomo official ads.",
       "mrs": "full.mrs",
+      "srs": "sing-box/rule-set/full.srs",
+      "rawSrsUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/full.srs",
       "mrsAliases": [
         "ad-domain.mrs"
       ],
@@ -37,6 +39,8 @@
     "lite": {
       "description": "China ad-blocking domains plus PCDN domains only.",
       "mrs": "lite.mrs",
+      "srs": "sing-box/rule-set/lite.srs",
+      "rawSrsUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/lite.srs",
       "mrsAliases": [],
       "sources": [
         "ads-cn",
@@ -63,6 +67,8 @@
     "global": {
       "description": "Non-China ad domains from global sources; China and PCDN sources are subtracted.",
       "mrs": "global.mrs",
+      "srs": "sing-box/rule-set/global.srs",
+      "rawSrsUrl": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/global.srs",
       "mrsAliases": [],
       "sources": [
         "ads-global",

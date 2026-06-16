@@ -23,8 +23,8 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 201155,
-        "ads-global": 274471,
+        "ads-cn": 199357,
+        "ads-global": 276921,
         "mihomo-category-ads-all": 894,
         "wuming-adguard-mobile": 86100,
         "wuming-hosts": 6054,
@@ -33,7 +33,7 @@
         "httpdns-cn@ads": 49,
         "exclude:wuming-whitelist": 2850,
         "excluded": 2857,
-        "merged": 398069
+        "merged": 398459
       }
     },
     "lite": {
@@ -54,14 +54,14 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 201155,
+        "ads-cn": 199357,
         "wuming-adguard-mobile": 86100,
         "wuming-hosts": 6054,
         "pcdn": 33,
         "httpdns-cn@ads": 49,
         "exclude:wuming-whitelist": 2850,
         "excluded": 2857,
-        "merged": 209233
+        "merged": 207439
       }
     },
     "global": {
@@ -85,16 +85,16 @@
         "httpdns-cn@ads"
       ],
       "counts": {
-        "ads-global": 274471,
+        "ads-global": 276921,
         "mihomo-category-ads-all": 894,
         "exclude:wuming-whitelist": 2850,
-        "subtract:ads-cn": 201155,
+        "subtract:ads-cn": 199357,
         "subtract:wuming-adguard-mobile": 86100,
         "subtract:wuming-hosts": 6054,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 49,
-        "excluded": 212090,
-        "merged": 188823
+        "excluded": 210296,
+        "merged": 191007
       }
     }
   },
@@ -385,8 +385,8 @@
     "global": "global.mrs subtracts lite source domains to avoid China/PCDN overlap."
   },
   "domainCounts": {
-    "ads-cn": 201155,
-    "ads-global": 274471,
+    "ads-cn": 199357,
+    "ads-global": 276921,
     "mihomo-category-ads-all": 894,
     "wuming-adguard-mobile": 86100,
     "wuming-hosts": 6054,
@@ -395,7 +395,7 @@
     "httpdns-cn@ads": 49,
     "exclude:wuming-whitelist": 2850,
     "excluded": 2857,
-    "merged": 398069
+    "merged": 398459
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

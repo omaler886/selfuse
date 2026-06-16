@@ -45,6 +45,15 @@ DOMAIN_PATTERN = re.compile(r"^(?:[a-z0-9-]+\.)+[a-z0-9-]+$", re.IGNORECASE)
 ADGUARD_HOST_END_PATTERN = re.compile(r"[\^/:?#\[\]@|]")
 URL_HOST_PATTERN = re.compile(r"^\|?https?://([^/:?#]+)", re.IGNORECASE)
 BLOCK_HOSTS = {"0.0.0.0", "127.0.0.1", "::1"}
+BUSINESS_DOMAIN_EXCLUDES = {
+    "a-api.anthropic.com",
+    "a-cdn.anthropic.com",
+    "anime-tracker.aruku.kro.kr",
+    "contoso-my.sharepoint.com",
+    "epicgames.com",
+    "s.gofile.io",
+    "speed.cloudflare.com",
+}
 
 
 @dataclass(frozen=True)
@@ -653,13 +662,22 @@ def normalize_adguard_block_domain(value: str) -> str | None:
     if has_badfilter_option(item):
         return None
 
+    if "$" in item:
+        return None
+
     target = item.split("$", 1)[0].strip()
     if target.startswith("||"):
-        host = ADGUARD_HOST_END_PATTERN.split(target[2:], 1)[0]
+        body = target[2:]
+        host = ADGUARD_HOST_END_PATTERN.split(body, 1)[0]
+        suffix = body[len(host):]
+        if suffix not in {"", "^"}:
+            return None
         return normalize_domain(host)
 
     match = URL_HOST_PATTERN.match(target)
     if match:
+        if target[match.end():]:
+            return None
         return normalize_domain(match.group(1))
 
     return None
@@ -906,6 +924,7 @@ def build_domain_target(mihomo: str, sing_box: str, target: DomainTarget, cache:
     counts.update(subtract_counts)
 
     removed_rules = excluded | subtracted
+    removed_rules.update(BUSINESS_DOMAIN_EXCLUDES)
     rules.difference_update(removed_rules)
     counts["excluded"] = len(removed_rules)
     counts["merged"] = len(rules)

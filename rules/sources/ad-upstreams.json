@@ -23,17 +23,17 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 202213,
-        "ads-global": 275171,
+        "ads-cn": 202273,
+        "ads-global": 275336,
         "mihomo-category-ads-all": 897,
-        "wuming-adguard-mobile": 87391,
-        "wuming-hosts": 6054,
+        "wuming-adguard-mobile": 179570,
+        "wuming-hosts": 4919,
         "monitoring-block": 134,
         "pcdn": 33,
         "httpdns-cn@ads": 49,
-        "exclude:wuming-whitelist": 2871,
-        "excluded": 2878,
-        "merged": 396659
+        "exclude:wuming-whitelist": 3,
+        "excluded": 10,
+        "merged": 392075
       }
     },
     "lite": {
@@ -54,14 +54,14 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 202213,
-        "wuming-adguard-mobile": 87391,
-        "wuming-hosts": 6054,
+        "ads-cn": 202273,
+        "wuming-adguard-mobile": 179570,
+        "wuming-hosts": 4919,
         "pcdn": 33,
         "httpdns-cn@ads": 49,
-        "exclude:wuming-whitelist": 2871,
-        "excluded": 2878,
-        "merged": 210305
+        "exclude:wuming-whitelist": 3,
+        "excluded": 10,
+        "merged": 205028
       }
     },
     "global": {
@@ -85,16 +85,16 @@
         "httpdns-cn@ads"
       ],
       "counts": {
-        "ads-global": 275171,
+        "ads-global": 275336,
         "mihomo-category-ads-all": 897,
-        "exclude:wuming-whitelist": 2871,
-        "subtract:ads-cn": 202213,
-        "subtract:wuming-adguard-mobile": 87391,
-        "subtract:wuming-hosts": 6054,
+        "exclude:wuming-whitelist": 3,
+        "subtract:ads-cn": 202273,
+        "subtract:wuming-adguard-mobile": 179570,
+        "subtract:wuming-hosts": 4919,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 49,
-        "excluded": 213183,
-        "merged": 186341
+        "excluded": 205038,
+        "merged": 187029
       }
     }
   },
@@ -385,17 +385,17 @@
     "global": "global.mrs subtracts lite source domains to avoid China/PCDN overlap."
   },
   "domainCounts": {
-    "ads-cn": 202213,
-    "ads-global": 275171,
+    "ads-cn": 202273,
+    "ads-global": 275336,
     "mihomo-category-ads-all": 897,
-    "wuming-adguard-mobile": 87391,
-    "wuming-hosts": 6054,
+    "wuming-adguard-mobile": 179570,
+    "wuming-hosts": 4919,
     "monitoring-block": 134,
     "pcdn": 33,
     "httpdns-cn@ads": 49,
-    "exclude:wuming-whitelist": 2871,
-    "excluded": 2878,
-    "merged": 396659
+    "exclude:wuming-whitelist": 3,
+    "excluded": 10,
+    "merged": 392075
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

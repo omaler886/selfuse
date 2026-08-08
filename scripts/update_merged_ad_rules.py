@@ -33,11 +33,11 @@ GLOBAL_SRS = SING_BOX_RULE_SET_DIR / "global.srs"
 
 SELFUSE_RAW = "https://raw.githubusercontent.com/omaler886/selfuse/main"
 METACUBEX_RAW = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta"
-WUMING_RAW = "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main"
+WUMING_RAW = "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main"
 
 HTTPDNS_MRS_URL = f"{METACUBEX_RAW}/geo/geosite/category-httpdns-cn@ads.mrs"
 MIHOMO_ADS_ALL_MRS_URL = f"{METACUBEX_RAW}/geo/geosite/category-ads-all.mrs"
-WUMING_MOBILE_URL = f"{WUMING_RAW}/dist/adguard_rules_mobile.txt"
+WUMING_LITE_URL = f"{WUMING_RAW}/dist/adguard_lite.txt"
 WUMING_HOSTS_URL = f"{WUMING_RAW}/dist/hosts_rules.txt"
 WUMING_WHITELIST_URL = f"{WUMING_RAW}/dist/whitelist.txt"
 
@@ -244,22 +244,22 @@ MIHOMO_ADS_ALL_SOURCE = Source(
         ),
     ),
 )
-WUMING_MOBILE_SOURCE = Source(
-    name="wuming-adguard-mobile",
+WUMING_LITE_SOURCE = Source(
+    name="wuming-adguard-lite",
     behavior="domain",
     kind="adguard-block",
     region="china",
-    url=WUMING_MOBILE_URL,
-    repository="Wuming155/China-AdGuard-Rules",
+    url=WUMING_LITE_URL,
+    repository="Wuming155/AdGuard-Rules",
     branch="main",
-    source_path="dist/adguard_rules_mobile.txt",
+    source_path="dist/adguard_lite.txt",
     upstreams=(
         Upstream(
-            name="Wuming155 AdGuard mobile rules",
-            url=WUMING_MOBILE_URL,
-            repository="Wuming155/China-AdGuard-Rules",
+            name="Wuming155 AdGuard lite rules",
+            url=WUMING_LITE_URL,
+            repository="Wuming155/AdGuard-Rules",
             branch="main",
-            path="dist/adguard_rules_mobile.txt",
+            path="dist/adguard_lite.txt",
         ),
     ),
     note="Only DNS-safe block rules are imported; cosmetic and scoped network rules are ignored.",
@@ -270,14 +270,14 @@ WUMING_HOSTS_SOURCE = Source(
     kind="hosts-block",
     region="china",
     url=WUMING_HOSTS_URL,
-    repository="Wuming155/China-AdGuard-Rules",
+    repository="Wuming155/AdGuard-Rules",
     branch="main",
     source_path="dist/hosts_rules.txt",
     upstreams=(
         Upstream(
             name="Wuming155 hosts rules",
             url=WUMING_HOSTS_URL,
-            repository="Wuming155/China-AdGuard-Rules",
+            repository="Wuming155/AdGuard-Rules",
             branch="main",
             path="dist/hosts_rules.txt",
         ),
@@ -355,14 +355,14 @@ WUMING_WHITELIST_SOURCE = Source(
     kind="adguard-allow",
     region="china",
     url=WUMING_WHITELIST_URL,
-    repository="Wuming155/China-AdGuard-Rules",
+    repository="Wuming155/AdGuard-Rules",
     branch="main",
     source_path="dist/whitelist.txt",
     upstreams=(
         Upstream(
             name="Wuming155 whitelist",
             url=WUMING_WHITELIST_URL,
-            repository="Wuming155/China-AdGuard-Rules",
+            repository="Wuming155/AdGuard-Rules",
             branch="main",
             path="dist/whitelist.txt",
         ),
@@ -394,7 +394,7 @@ FULL_SOURCES = (
     ADS_CN_SOURCE,
     ADS_GLOBAL_SOURCE,
     MIHOMO_ADS_ALL_SOURCE,
-    WUMING_MOBILE_SOURCE,
+    WUMING_LITE_SOURCE,
     WUMING_HOSTS_SOURCE,
     MONITORING_SOURCE,
     PCDN_SOURCE,
@@ -402,7 +402,7 @@ FULL_SOURCES = (
 )
 LITE_SOURCES = (
     ADS_CN_SOURCE,
-    WUMING_MOBILE_SOURCE,
+    WUMING_LITE_SOURCE,
     WUMING_HOSTS_SOURCE,
     PCDN_SOURCE,
     HTTPDNS_SOURCE,
@@ -417,7 +417,7 @@ ALL_SOURCES = (
     ADS_CN_SOURCE,
     ADS_GLOBAL_SOURCE,
     MIHOMO_ADS_ALL_SOURCE,
-    WUMING_MOBILE_SOURCE,
+    WUMING_LITE_SOURCE,
     WUMING_HOSTS_SOURCE,
     MONITORING_SOURCE,
     PCDN_SOURCE,

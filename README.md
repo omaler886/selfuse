@@ -28,9 +28,9 @@
 | `ads-global` | `omaler886/selfuse@main` | `ads-global.mrs`，由 Hagezi Pro、Hagezi Ultimate 和本仓库精选规则生成 |
 | `mihomo-category-ads-all` | `MetaCubeX/meta-rules-dat@meta` | `geo/geosite/category-ads-all.mrs` |
 | `httpdns-cn@ads` | `MetaCubeX/meta-rules-dat@meta` | `geo/geosite/category-httpdns-cn@ads.mrs` |
-| `wuming-adguard-mobile` | `Wuming155/China-AdGuard-Rules@main` | `dist/adguard_rules_mobile.txt` |
-| `wuming-hosts` | `Wuming155/China-AdGuard-Rules@main` | `dist/hosts_rules.txt` |
-| `wuming-whitelist` | `Wuming155/China-AdGuard-Rules@main` | `dist/whitelist.txt`，用于从合并结果扣除例外 |
+| `wuming-adguard-lite` | `Wuming155/AdGuard-Rules@main` | `dist/adguard_lite.txt` |
+| `wuming-hosts` | `Wuming155/AdGuard-Rules@main` | `dist/hosts_rules.txt` |
+| `wuming-whitelist` | `Wuming155/AdGuard-Rules@main` | `dist/whitelist.txt`，用于从合并结果扣除例外 |
 | `pcdn` | `omaler886/selfuse@main` | `pcdn.mrs`，由 `rules/sources/pcdn-curated.txt` 生成 |
 | `monitoring-block` | `omaler886/selfuse@main` | `monitoring-block.mrs`，含 CocoaDuck AntiAntiFraud 和本仓库精选规则 |
 

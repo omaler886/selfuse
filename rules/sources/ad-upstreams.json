@@ -12,7 +12,7 @@
         "ads-cn",
         "ads-global",
         "mihomo-category-ads-all",
-        "wuming-adguard-mobile",
+        "wuming-adguard-lite",
         "wuming-hosts",
         "monitoring-block",
         "pcdn",
@@ -25,15 +25,15 @@
       "counts": {
         "ads-cn": 202797,
         "ads-global": 302137,
-        "mihomo-category-ads-all": 903,
-        "wuming-adguard-mobile": 180020,
-        "wuming-hosts": 114860,
+        "mihomo-category-ads-all": 890,
+        "wuming-adguard-lite": 198951,
+        "wuming-hosts": 261390,
         "monitoring-block": 135,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
-        "exclude:wuming-whitelist": 3,
-        "excluded": 10,
-        "merged": 432526
+        "exclude:wuming-whitelist": 151,
+        "excluded": 158,
+        "merged": 573876
       }
     },
     "lite": {
@@ -44,7 +44,7 @@
       "mrsAliases": [],
       "sources": [
         "ads-cn",
-        "wuming-adguard-mobile",
+        "wuming-adguard-lite",
         "wuming-hosts",
         "pcdn",
         "httpdns-cn@ads"
@@ -55,13 +55,13 @@
       "subtractSources": [],
       "counts": {
         "ads-cn": 202797,
-        "wuming-adguard-mobile": 180020,
-        "wuming-hosts": 114860,
+        "wuming-adguard-lite": 198951,
+        "wuming-hosts": 261390,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
-        "exclude:wuming-whitelist": 3,
-        "excluded": 10,
-        "merged": 212937
+        "exclude:wuming-whitelist": 151,
+        "excluded": 158,
+        "merged": 356661
       }
     },
     "global": {
@@ -79,22 +79,22 @@
       ],
       "subtractSources": [
         "ads-cn",
-        "wuming-adguard-mobile",
+        "wuming-adguard-lite",
         "wuming-hosts",
         "pcdn",
         "httpdns-cn@ads"
       ],
       "counts": {
         "ads-global": 302137,
-        "mihomo-category-ads-all": 903,
-        "exclude:wuming-whitelist": 3,
+        "mihomo-category-ads-all": 890,
+        "exclude:wuming-whitelist": 151,
         "subtract:ads-cn": 202797,
-        "subtract:wuming-adguard-mobile": 180020,
-        "subtract:wuming-hosts": 114860,
+        "subtract:wuming-adguard-lite": 198951,
+        "subtract:wuming-hosts": 261390,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 50,
-        "excluded": 212947,
-        "merged": 219571
+        "excluded": 356819,
+        "merged": 217197
       }
     }
   },
@@ -218,23 +218,23 @@
       ]
     },
     {
-      "name": "wuming-adguard-mobile",
+      "name": "wuming-adguard-lite",
       "behavior": "domain",
       "kind": "adguard-block",
       "region": "china",
-      "repository": "Wuming155/China-AdGuard-Rules",
+      "repository": "Wuming155/AdGuard-Rules",
       "branch": "main",
-      "path": "dist/adguard_rules_mobile.txt",
+      "path": "dist/adguard_lite.txt",
       "localPath": null,
-      "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/adguard_rules_mobile.txt",
+      "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/adguard_lite.txt",
       "note": "Only DNS-safe block rules are imported; cosmetic and scoped network rules are ignored.",
       "upstreams": [
         {
-          "name": "Wuming155 AdGuard mobile rules",
-          "repository": "Wuming155/China-AdGuard-Rules",
+          "name": "Wuming155 AdGuard lite rules",
+          "repository": "Wuming155/AdGuard-Rules",
           "branch": "main",
-          "path": "dist/adguard_rules_mobile.txt",
-          "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/adguard_rules_mobile.txt",
+          "path": "dist/adguard_lite.txt",
+          "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/adguard_lite.txt",
           "note": null
         }
       ]
@@ -244,19 +244,19 @@
       "behavior": "domain",
       "kind": "hosts-block",
       "region": "china",
-      "repository": "Wuming155/China-AdGuard-Rules",
+      "repository": "Wuming155/AdGuard-Rules",
       "branch": "main",
       "path": "dist/hosts_rules.txt",
       "localPath": null,
-      "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/hosts_rules.txt",
+      "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/hosts_rules.txt",
       "note": null,
       "upstreams": [
         {
           "name": "Wuming155 hosts rules",
-          "repository": "Wuming155/China-AdGuard-Rules",
+          "repository": "Wuming155/AdGuard-Rules",
           "branch": "main",
           "path": "dist/hosts_rules.txt",
-          "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/hosts_rules.txt",
+          "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/hosts_rules.txt",
           "note": null
         }
       ]
@@ -340,19 +340,19 @@
       "behavior": "domain",
       "kind": "adguard-allow",
       "region": "china",
-      "repository": "Wuming155/China-AdGuard-Rules",
+      "repository": "Wuming155/AdGuard-Rules",
       "branch": "main",
       "path": "dist/whitelist.txt",
       "localPath": null,
-      "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/whitelist.txt",
+      "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/whitelist.txt",
       "note": "Only DNS-safe @@ exceptions are used to subtract block domains.",
       "upstreams": [
         {
           "name": "Wuming155 whitelist",
-          "repository": "Wuming155/China-AdGuard-Rules",
+          "repository": "Wuming155/AdGuard-Rules",
           "branch": "main",
           "path": "dist/whitelist.txt",
-          "rawUrl": "https://raw.githubusercontent.com/Wuming155/China-AdGuard-Rules/main/dist/whitelist.txt",
+          "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/whitelist.txt",
           "note": null
         }
       ]
@@ -387,15 +387,15 @@
   "domainCounts": {
     "ads-cn": 202797,
     "ads-global": 302137,
-    "mihomo-category-ads-all": 903,
-    "wuming-adguard-mobile": 180020,
-    "wuming-hosts": 114860,
+    "mihomo-category-ads-all": 890,
+    "wuming-adguard-lite": 198951,
+    "wuming-hosts": 261390,
     "monitoring-block": 135,
     "pcdn": 33,
     "httpdns-cn@ads": 50,
-    "exclude:wuming-whitelist": 3,
-    "excluded": 10,
-    "merged": 432526
+    "exclude:wuming-whitelist": 151,
+    "excluded": 158,
+    "merged": 573876
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

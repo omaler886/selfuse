@@ -1,5 +1,5 @@
 name = "private-nav-worker"
-main = "worker.js"
+main = "worker/index.js"
 compatibility_date = "2026-03-25"
 
 [[kv_namespaces]]
@@ -10,3 +10,4 @@ id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
 # 在 Cloudflare Dashboard 或 wrangler secret 中配置
 # wrangler secret put ACCESS_PASSWORD
 # wrangler secret put SESSION_SECRET
+

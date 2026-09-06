@@ -28,13 +28,13 @@
 | `ads-global` | `omaler886/selfuse@main` | `ads-global.mrs`，由 Hagezi Pro、Hagezi Ultimate 和本仓库精选规则生成 |
 | `mihomo-category-ads-all` | `MetaCubeX/meta-rules-dat@meta` | `geo/geosite/category-ads-all.mrs` |
 | `httpdns-cn@ads` | `MetaCubeX/meta-rules-dat@meta` | `geo/geosite/category-httpdns-cn@ads.mrs` |
-| `wuming-adguard-lite` | `Wuming155/AdGuard-Rules@main` | `dist/adguard_lite.txt` |
-| `wuming-hosts` | `Wuming155/AdGuard-Rules@main` | `dist/hosts_rules.txt` |
-| `wuming-whitelist` | `Wuming155/AdGuard-Rules@main` | `dist/whitelist.txt`，用于从合并结果扣除例外 |
+| `wuming-adguard-lite` | `Wuming155/AdGuard-Rules` GitHub Releases | `releases/latest/download/adguard_lite.txt` |
+| `wuming-hosts` | `Wuming155/AdGuard-Rules` GitHub Releases | `releases/latest/download/hosts_rules.txt` |
+| `wuming-whitelist` | `Wuming155/AdGuard-Rules` GitHub Releases | `releases/latest/download/whitelist.txt`，用于从合并结果扣除例外 |
 | `pcdn` | `omaler886/selfuse@main` | `pcdn.mrs`，由 `rules/sources/pcdn-curated.txt` 生成 |
 | `monitoring-block` | `omaler886/selfuse@main` | `monitoring-block.mrs`，含 CocoaDuck AntiAntiFraud 和本仓库精选规则 |
 
-Wuming155 上游 README 有再分发限制提示；公开托管前应确认使用方式符合上游要求。
+Wuming155 自 2026-09-01 起将规则移至 GitHub Releases，旧的 `main/dist` 地址已失效。上游 README 有再分发限制提示；公开托管前应确认使用方式符合上游要求。
 
 ## 生成命令
 
@@ -44,6 +44,8 @@ python3 scripts/update_merged_ad_rules.py ./mihomo ./sing-box-bin
 ```
 
 `update_merged_ad_rules.py` 会生成 `full.mrs`、`lite.mrs`、`global.mrs`、`ad-domain.mrs`、`ad-ip.mrs`，同时生成 `sing-box/rule-set/full.srs`、`sing-box/rule-set/lite.srs`、`sing-box/rule-set/global.srs`，并更新 `rules/sources/ad-upstreams.json`。
+
+运行 `python3 -m unittest discover -s tests -v` 可离线验证上游地址、来源记录和下载异常处理；更新工作流也会先运行这些测试。
 
 ## Cloudflare Worker
 

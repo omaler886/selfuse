@@ -223,19 +223,19 @@
       "kind": "adguard-block",
       "region": "china",
       "repository": "Wuming155/AdGuard-Rules",
-      "branch": "main",
-      "path": "dist/adguard_lite.txt",
+      "branch": null,
+      "path": null,
       "localPath": null,
-      "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/adguard_lite.txt",
+      "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/adguard_lite.txt",
       "note": "Only DNS-safe block rules are imported; cosmetic and scoped network rules are ignored.",
       "upstreams": [
         {
           "name": "Wuming155 AdGuard lite rules",
           "repository": "Wuming155/AdGuard-Rules",
-          "branch": "main",
-          "path": "dist/adguard_lite.txt",
-          "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/adguard_lite.txt",
-          "note": null
+          "branch": null,
+          "path": null,
+          "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/adguard_lite.txt",
+          "note": "Published as a GitHub Releases asset, not a branch file."
         }
       ]
     },
@@ -245,19 +245,19 @@
       "kind": "hosts-block",
       "region": "china",
       "repository": "Wuming155/AdGuard-Rules",
-      "branch": "main",
-      "path": "dist/hosts_rules.txt",
+      "branch": null,
+      "path": null,
       "localPath": null,
-      "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/hosts_rules.txt",
+      "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/hosts_rules.txt",
       "note": null,
       "upstreams": [
         {
           "name": "Wuming155 hosts rules",
           "repository": "Wuming155/AdGuard-Rules",
-          "branch": "main",
-          "path": "dist/hosts_rules.txt",
-          "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/hosts_rules.txt",
-          "note": null
+          "branch": null,
+          "path": null,
+          "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/hosts_rules.txt",
+          "note": "Published as a GitHub Releases asset, not a branch file."
         }
       ]
     },
@@ -341,19 +341,19 @@
       "kind": "adguard-allow",
       "region": "china",
       "repository": "Wuming155/AdGuard-Rules",
-      "branch": "main",
-      "path": "dist/whitelist.txt",
+      "branch": null,
+      "path": null,
       "localPath": null,
-      "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/whitelist.txt",
+      "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/whitelist.txt",
       "note": "Only DNS-safe @@ exceptions are used to subtract block domains.",
       "upstreams": [
         {
           "name": "Wuming155 whitelist",
           "repository": "Wuming155/AdGuard-Rules",
-          "branch": "main",
-          "path": "dist/whitelist.txt",
-          "rawUrl": "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main/dist/whitelist.txt",
-          "note": null
+          "branch": null,
+          "path": null,
+          "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/whitelist.txt",
+          "note": "Published as a GitHub Releases asset, not a branch file."
         }
       ]
     },

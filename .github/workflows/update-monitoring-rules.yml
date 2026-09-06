@@ -16,6 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Test rule updater
+        run: python3 -m unittest discover -s tests -v
+
       - name: Download mihomo
         shell: bash
         run: |

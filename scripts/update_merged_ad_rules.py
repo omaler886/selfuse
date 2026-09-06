@@ -5,8 +5,11 @@ import json
 import re
 import subprocess
 import sys
+import time
+import urllib.error
 import urllib.request
 from dataclasses import dataclass
+from http.client import IncompleteRead
 from pathlib import Path
 
 
@@ -33,13 +36,17 @@ GLOBAL_SRS = SING_BOX_RULE_SET_DIR / "global.srs"
 
 SELFUSE_RAW = "https://raw.githubusercontent.com/omaler886/selfuse/main"
 METACUBEX_RAW = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta"
-WUMING_RAW = "https://raw.githubusercontent.com/Wuming155/AdGuard-Rules/main"
+WUMING_RELEASES = "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download"
+WUMING_RELEASE_NOTE = "Published as a GitHub Releases asset, not a branch file."
 
 HTTPDNS_MRS_URL = f"{METACUBEX_RAW}/geo/geosite/category-httpdns-cn@ads.mrs"
 MIHOMO_ADS_ALL_MRS_URL = f"{METACUBEX_RAW}/geo/geosite/category-ads-all.mrs"
-WUMING_LITE_URL = f"{WUMING_RAW}/dist/adguard_lite.txt"
-WUMING_HOSTS_URL = f"{WUMING_RAW}/dist/hosts_rules.txt"
-WUMING_WHITELIST_URL = f"{WUMING_RAW}/dist/whitelist.txt"
+WUMING_LITE_URL = f"{WUMING_RELEASES}/adguard_lite.txt"
+WUMING_HOSTS_URL = f"{WUMING_RELEASES}/hosts_rules.txt"
+WUMING_WHITELIST_URL = f"{WUMING_RELEASES}/whitelist.txt"
+
+DOWNLOAD_ATTEMPTS = 3
+RETRYABLE_HTTP_STATUSES = {408, 429, 500, 502, 503, 504}
 
 DOMAIN_PATTERN = re.compile(r"^(?:[a-z0-9-]+\.)+[a-z0-9-]+$", re.IGNORECASE)
 ADGUARD_HOST_END_PATTERN = re.compile(r"[\^/:?#\[\]@|]")
@@ -251,15 +258,12 @@ WUMING_LITE_SOURCE = Source(
     region="china",
     url=WUMING_LITE_URL,
     repository="Wuming155/AdGuard-Rules",
-    branch="main",
-    source_path="dist/adguard_lite.txt",
     upstreams=(
         Upstream(
             name="Wuming155 AdGuard lite rules",
             url=WUMING_LITE_URL,
             repository="Wuming155/AdGuard-Rules",
-            branch="main",
-            path="dist/adguard_lite.txt",
+            note=WUMING_RELEASE_NOTE,
         ),
     ),
     note="Only DNS-safe block rules are imported; cosmetic and scoped network rules are ignored.",
@@ -271,15 +275,12 @@ WUMING_HOSTS_SOURCE = Source(
     region="china",
     url=WUMING_HOSTS_URL,
     repository="Wuming155/AdGuard-Rules",
-    branch="main",
-    source_path="dist/hosts_rules.txt",
     upstreams=(
         Upstream(
             name="Wuming155 hosts rules",
             url=WUMING_HOSTS_URL,
             repository="Wuming155/AdGuard-Rules",
-            branch="main",
-            path="dist/hosts_rules.txt",
+            note=WUMING_RELEASE_NOTE,
         ),
     ),
 )
@@ -356,15 +357,12 @@ WUMING_WHITELIST_SOURCE = Source(
     region="china",
     url=WUMING_WHITELIST_URL,
     repository="Wuming155/AdGuard-Rules",
-    branch="main",
-    source_path="dist/whitelist.txt",
     upstreams=(
         Upstream(
             name="Wuming155 whitelist",
             url=WUMING_WHITELIST_URL,
             repository="Wuming155/AdGuard-Rules",
-            branch="main",
-            path="dist/whitelist.txt",
+            note=WUMING_RELEASE_NOTE,
         ),
     ),
     note="Only DNS-safe @@ exceptions are used to subtract block domains.",
@@ -477,12 +475,17 @@ def fetch_file(url: str, target: Path) -> None:
         if response.status != 200:
             raise RuntimeError(f"Fetch failed: url={url}, status={response.status}")
 
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(response.read())
+        content = response.read()
+
+    if not content:
+        raise ValueError(f"Refusing empty upstream download: {url}")
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(content)
 
 
 def fetch_file_with_cache(url: str, target: Path) -> None:
-    """Purpose: download a remote input while preserving usable cached data.
+    """Purpose: retry transient download failures and report any cache fallback.
 
     Args:
         url: Remote HTTP(S) URL to download.
@@ -492,14 +495,28 @@ def fetch_file_with_cache(url: str, target: Path) -> None:
         None.
     """
 
-    try:
-        fetch_file(url, target)
-        return
-    except Exception:
-        if target.exists():
+    last_error: Exception | None = None
+    for attempt in range(1, DOWNLOAD_ATTEMPTS + 1):
+        try:
+            fetch_file(url, target)
             return
+        except (urllib.error.URLError, TimeoutError, ConnectionError, IncompleteRead) as error:
+            last_error = error
+            is_retryable = (
+                not isinstance(error, urllib.error.HTTPError)
+                or error.code in RETRYABLE_HTTP_STATUSES
+            )
+            if not is_retryable or attempt == DOWNLOAD_ATTEMPTS:
+                break
 
-        raise
+            print(f"Retrying download ({attempt}/{DOWNLOAD_ATTEMPTS}): {url}: {error}", file=sys.stderr)
+            time.sleep(attempt)
+
+    if target.is_file() and target.stat().st_size > 0:
+        print(f"WARNING: Download failed for {url}: {last_error}; using cached {target}", file=sys.stderr)
+        return
+
+    raise RuntimeError(f"Failed to download {url}: {last_error}") from last_error
 
 
 def get_source_path(source: Source) -> Path:

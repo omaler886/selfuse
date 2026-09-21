@@ -23,17 +23,17 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 223308,
-        "ads-global": 287334,
+        "ads-cn": 223698,
+        "ads-global": 290596,
         "mihomo-category-ads-all": 910,
-        "wuming-adguard-lite": 215652,
-        "wuming-hosts": 257587,
+        "wuming-adguard-lite": 216014,
+        "wuming-hosts": 257593,
         "monitoring-block": 134,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
         "exclude:wuming-whitelist": 152,
         "excluded": 159,
-        "merged": 568659
+        "merged": 571690
       }
     },
     "lite": {
@@ -54,14 +54,14 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 223308,
-        "wuming-adguard-lite": 215652,
-        "wuming-hosts": 257587,
+        "ads-cn": 223698,
+        "wuming-adguard-lite": 216014,
+        "wuming-hosts": 257593,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
         "exclude:wuming-whitelist": 152,
         "excluded": 159,
-        "merged": 372168
+        "merged": 372571
       }
     },
     "global": {
@@ -85,16 +85,16 @@
         "httpdns-cn@ads"
       ],
       "counts": {
-        "ads-global": 287334,
+        "ads-global": 290596,
         "mihomo-category-ads-all": 910,
         "exclude:wuming-whitelist": 152,
-        "subtract:ads-cn": 223308,
-        "subtract:wuming-adguard-lite": 215652,
-        "subtract:wuming-hosts": 257587,
+        "subtract:ads-cn": 223698,
+        "subtract:wuming-adguard-lite": 216014,
+        "subtract:wuming-hosts": 257593,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 50,
-        "excluded": 372327,
-        "merged": 196473
+        "excluded": 372730,
+        "merged": 199101
       }
     }
   },
@@ -385,17 +385,17 @@
     "global": "global.mrs subtracts lite source domains to avoid China/PCDN overlap."
   },
   "domainCounts": {
-    "ads-cn": 223308,
-    "ads-global": 287334,
+    "ads-cn": 223698,
+    "ads-global": 290596,
     "mihomo-category-ads-all": 910,
-    "wuming-adguard-lite": 215652,
-    "wuming-hosts": 257587,
+    "wuming-adguard-lite": 216014,
+    "wuming-hosts": 257593,
     "monitoring-block": 134,
     "pcdn": 33,
     "httpdns-cn@ads": 50,
     "exclude:wuming-whitelist": 152,
     "excluded": 159,
-    "merged": 568659
+    "merged": 571690
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

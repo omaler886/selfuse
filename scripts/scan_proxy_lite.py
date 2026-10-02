@@ -224,18 +224,19 @@ def is_sale_page(body: bytes) -> bool:
 PROBE_STAT = Counter()
 
 
-def _verdict(data: bytes) -> tuple[str, str | None]:
+def _verdict(data: bytes, via: str) -> tuple[str, str | None, str]:
     mk = sale_mark(data)
     if mk:
         PROBE_STAT["sale"] += 1
-        return "sale", mk
+        return "sale", mk, via
     PROBE_STAT["ok"] += 1
-    return "ok", None
+    return "ok", None, via
 
 
-def http_probe(d: str, v4: list[str]) -> tuple[str, str | None]:
+def http_probe(d: str, v4: list[str]) -> tuple[str, str | None, str | None]:
     """L4 内容层：HTTPS(SNI=d, 不验证书) 优先，失败退 HTTP80。
-    返回 (verdict, mark)：verdict ∈ sale/ok/noresp，mark 为命中的挂售标记（仅 sale 非空）。"""
+    返回 (verdict, mark, via)：verdict ∈ sale/ok/noresp；mark 为命中的挂售标记（仅 sale 非空）；
+    via ∈ https/http（noresp 时为 None）—— 用于区分「443 挂但 80 活」与「双端口全挂」。"""
     ua = f"GET / HTTP/1.1\r\nHost: {d}\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\nAccept: */*\r\nConnection: close\r\n\r\n".encode()
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
@@ -252,7 +253,7 @@ def http_probe(d: str, v4: list[str]) -> tuple[str, str | None]:
                 if not chunk:
                     break
                 data += chunk
-            return _verdict(data)
+            return _verdict(data, "https")
         except Exception as e:
             PROBE_STAT[f"err443/{type(e).__name__}"] += 1
             continue
@@ -273,7 +274,7 @@ def http_probe(d: str, v4: list[str]) -> tuple[str, str | None]:
                 if not chunk:
                     break
                 data += chunk
-            return _verdict(data)
+            return _verdict(data, "http")
         except Exception as e:
             PROBE_STAT[f"err80/{type(e).__name__}"] += 1
             continue
@@ -284,7 +285,7 @@ def http_probe(d: str, v4: list[str]) -> tuple[str, str | None]:
                 except Exception:
                     pass
     PROBE_STAT["noresp"] += 1
-    return "noresp", None
+    return "noresp", None, None
 
 
 def judge(d: str) -> str:
@@ -361,6 +362,8 @@ def main():
 
     alive = [d for d, v in res.items() if v == "alive"]
     parked, tcp_dead, tcp_timeout, sale_pages = {}, [], [], {}  # sale_pages: domain -> 命中标记
+    # 只读诊断：均「保守保留」，仅导出名单供后续分析，不影响本层判定
+    http_only, noresp = [], []  # 443 挂但 80 活 / 443+80 双端口全挂
 
     def work(d):
         addrs = get_addrs(d)
@@ -377,9 +380,13 @@ def main():
         if verdict == "timeout":
             tcp_timeout.append(d)  # 鉴权墙/防火墙 drop：保留
             return
-        verdict, mk = http_probe(d, v4)
+        verdict, mk, via = http_probe(d, v4)
         if verdict == "sale":
             sale_pages[d] = mk  # L4 内容层：挂售页 / CDN 源站死错误页
+        elif verdict == "noresp":
+            noresp.append(d)  # 443+80 双端口全挂（诊断，仍保留）
+        elif via == "http":
+            http_only.append(d)  # 443 挂但 80 活（诊断，仍保留）
 
     with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
@@ -388,6 +395,11 @@ def main():
           f"sale/cdn-dead removed: {len(sale_pages)}, final: {len(final)}")
     print(f"http_probe stat: {dict(PROBE_STAT.most_common())}", flush=True)
     Path("tcp-timeout.txt").write_text("\n".join(sorted(tcp_timeout)) + "\n", encoding="utf-8")
+    # 只读诊断名单（不改判定）：供分析「443 挂但 80 活」「双端口全挂」两批的构成
+    Path("http-only.txt").write_text("\n".join(sorted(http_only)) + "\n", encoding="utf-8")
+    Path("noresp.txt").write_text("\n".join(sorted(noresp)) + "\n", encoding="utf-8")
+    print(f"diagnostic: http-only(443挂/80活)={len(http_only)}, "
+          f"noresp(443+80全挂)={len(noresp)}", flush=True)
     # 带命中标记落盘：区分「挂售/停放」（该剔）与「CF 源站错误页」（可能误杀），便于抽查审计
     Path("sale-pages.txt").write_text(
         "\n".join(f"{d}\t{sale_pages[d]}" for d in sorted(sale_pages)) + "\n", encoding="utf-8")

@@ -259,7 +259,7 @@ def main():
     print("scan result:", stat, f"{time.time() - t0:.0f}s")
 
     alive = [d for d, v in res.items() if v == "alive"]
-    parked, tcp_dead = {}, []
+    parked, tcp_dead, tcp_timeout = {}, [], []
 
     def work(d):
         addrs = get_addrs(d)
@@ -270,12 +270,16 @@ def main():
         if addrs:
             verdict = tcp_probe(addrs)
             if verdict == "refused":
-                tcp_dead.append(d)  # 全端口 RST：服务确实没了（防火墙 drop 的超时保留）
-    
+                tcp_dead.append(d)  # 全端口 RST：服务确实没了
+            elif verdict == "timeout":
+                tcp_timeout.append(d)  # 鉴权墙/防火墙 drop：保留，名单导出供人工核查
+
     with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
     final = sorted(d for d in alive if d not in parked and d not in tcp_dead)
-    print(f"parked removed: {len(parked)}, tcp-dead removed: {len(tcp_dead)}, final: {len(final)}")
+    print(f"parked removed: {len(parked)}, tcp-dead removed: {len(tcp_dead)}, "
+          f"tcp-timeout kept: {len(tcp_timeout)}, final: {len(final)}")
+    Path("tcp-timeout.txt").write_text("\n".join(sorted(tcp_timeout)) + "\n", encoding="utf-8")
 
     if len(final) < MIN_ALIVE:
         print(f"gate failed: alive {len(final)} < {MIN_ALIVE}, refusing to write")

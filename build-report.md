@@ -1,38 +1,37 @@
 # build-report
 
-构建时间: 2026-10-01 05:49:20 UTC
+构建时间: 2026-10-02 08:41:54 UTC
 
 | 规则集 | 条目 | 上轮 | 变化 | mrs | srs |
 |---|---:|---:|---|:-:|:-:|
-| cn | 130274 | — | new | ✓ | ✓ |
-| cn_ip | 20023 | — | new | ✓ | ✓ |
-| private | 127 | — | new | ✓ | ✓ |
-| private-ip | 18 | — | new | ✓ | ✓ |
-| games-cn | 343 | — | new | ✓ | ✓ |
-| google-cn | 137 | — | new | ✓ | ✓ |
-| apple-cn | 244 | — | new | ✓ | ✓ |
-| microsoft-cn | 189 | — | new | ✓ | ✓ |
-| trackerslist | 98 | — | new | ✓ | ✓ |
-| ntp | 115 | — | new | ✓ | ✓ |
-| ai | 203 | — | new | ✓ | ✓ |
-| proxy | 29751 | — | new | ✓ | ✓ |
-| google | 845 | — | new | ✓ | ✓ |
-| google_ip | 8468 | — | new | ✓ | ✓ |
-| telegram | 21 | — | new | ✓ | ✓ |
-| telegramip | 12 | — | new | ✓ | ✓ |
-| netflix | 26 | — | new | ✓ | ✓ |
-| netflix-ip | 122 | — | new | ✓ | ✓ |
-| spotify | 25 | — | new | ✓ | ✓ |
-| discord | 28 | — | new | ✓ | ✓ |
-| ehentai | 8 | — | new | ✓ | ✓ |
+| cn | 130274 | 130274 | +0 | ✓ | ✓ |
+| cn_ip | 20050 | 20023 | +27 | ✓ | ✓ |
+| private | 127 | 127 | +0 | ✓ | ✓ |
+| private-ip | 18 | 18 | +0 | ✓ | ✓ |
+| games-cn | 343 | 343 | +0 | ✓ | ✓ |
+| google-cn | 137 | 137 | +0 | ✓ | ✓ |
+| apple-cn | 244 | 244 | +0 | ✓ | ✓ |
+| microsoft-cn | 189 | 189 | +0 | ✓ | ✓ |
+| trackerslist | 101 | 98 | +3 | ✓ | ✓ |
+| ntp | 115 | 115 | +0 | ✓ | ✓ |
+| ai | 203 | 203 | +0 | ✓ | ✓ |
+| proxy | 29751 | 29751 | +0 | ✓ | ✓ |
+| google | 845 | 845 | +0 | ✓ | ✓ |
+| google_ip | 8483 | — | new | ✓ | ✓ |
+| telegram | 21 | 21 | +0 | ✓ | ✓ |
+| telegramip | 12 | 12 | +0 | ✓ | ✓ |
+| netflix | 26 | 26 | +0 | ✓ | ✓ |
+| netflix-ip | 122 | 122 | +0 | ✓ | ✓ |
+| spotify | 25 | 25 | +0 | ✓ | ✓ |
+| discord | 28 | 28 | +0 | ✓ | ✓ |
+| ehentai | 8 | 8 | +0 | ✓ | ✓ |
 | onedrive | 16 | — | new | ✓ | ✓ |
-| talkatone | 9 | — | new | ✓ | ✓ |
-| epicgames | 30 | — | new | ✓ | ✓ |
-| custom-direct | 4 | — | new | ✓ | ✓ |
-| custom-direct-ip | 4 | — | new | ✓ | ✓ |
-| custom-us | 11 | — | new | — | ✓ |
-| custom-cdn | 1 | — | new | ✓ | ✓ |
-| custom-flow | 1 | — | new | ✓ | ✓ |
-| custom-hk | 1 | — | new | ✓ | ✓ |
-| custom-netflix | 2 | — | new | ✓ | ✓ |
-| custom-reject | 3 | — | new | ✓ | ✓ |
+| talkatone | 9 | 9 | +0 | ✓ | ✓ |
+| epicgames | 30 | 30 | +0 | ✓ | ✓ |
+| custom-direct | 2 | 4 | -2 ⚠️>5% | ✓ | ✓ |
+| custom-direct-ip | 1 | 4 | -3 ⚠️>5% | ✓ | ✓ |
+| custom-us | 10 | 11 | -1 ⚠️>5% | — | ✓ |
+| custom-cdn | 1 | 1 | +0 | ✓ | ✓ |
+| custom-hk | 1 | 1 | +0 | ✓ | ✓ |
+| custom-netflix | 2 | 2 | +0 | ✓ | ✓ |
+| custom-reject | 3 | 3 | +0 | ✓ | ✓ |

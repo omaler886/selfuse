@@ -502,7 +502,8 @@ def main():
 
     alive = [d for d, v in res.items() if v == "alive"]
     parked, tcp_dead, tcp_timeout, sale_pages = {}, [], [], {}  # sale_pages: domain -> 命中标记
-    parked_ns = {}  # L2b: domain -> 命中的停放商 NS 后缀
+    parked_ns = {}   # NS 指向停放商 + 站点异常 -> 剔（domain -> NS 后缀）
+    ns_suspect = {}  # NS 命中但页面正常 -> 仅观测，不剔
     # 只读诊断：均「保守保留」，仅导出名单供后续分析，不影响本层判定
     http_only, noresp = [], []  # 443 挂但 80 活 / 443+80 双端口全挂
 
@@ -514,27 +515,31 @@ def main():
             return
         if not addrs:
             return
-        # L2b: 停放商 NS 指纹 —— 比页面内容更早更稳，命中即剔
-        ns = query_ns(d)
-        if ns:
-            hit_ns = match_parking_ns(ns)
-            if hit_ns:
-                parked_ns[d] = hit_ns
-                return
+        # L2b: 停放商 NS 指纹。⚠️ 不能单独命中即剔 —— MISP 列表混着注册商/托管商默认 NS
+        # （domaincontrol.com=GoDaddy、registrar-servers.com=Namecheap 等），大量正常站用它们。
+        # 只有「NS 指向停放商」且「站点确实不可达」才剔；页面正常的一律保留，仅记观测名单。
+        ns_hit = match_parking_ns(query_ns(d))
         verdict = tcp_probe(addrs)
         if verdict == "refused":
             tcp_dead.append(d)  # 全端口 RST：服务确实没了
             return
         if verdict == "timeout":
             tcp_timeout.append(d)  # 鉴权墙/防火墙 drop：保留
+            if ns_hit:
+                ns_suspect[d] = ns_hit
             return
-        verdict, mk, via = http_probe(d, v4)
-        if verdict == "sale":
-            sale_pages[d] = mk  # L4 内容层：挂售页 / CDN 源站死错误页
-        elif verdict == "noresp":
+        v, mk, via = http_probe(d, v4)
+        if v == "sale":
+            sale_pages[d] = mk  # L4 内容层：挂售页 / CF 配置错误页
+        elif v == "noresp":
             noresp.append(d)  # 443+80 双端口全挂（诊断，仍保留）
-        elif via == "http":
-            http_only.append(d)  # 443 挂但 80 活（诊断，仍保留）
+            if ns_hit:
+                parked_ns[d] = ns_hit   # NS 指向停放商 + 双端口不可达 -> 判停放
+        else:
+            if via == "http":
+                http_only.append(d)  # 443 挂但 80 活（诊断，仍保留）
+            if ns_hit:
+                ns_suspect[d] = ns_hit  # NS 命中但页面正常 -> 仅观测，不剔
 
     with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
@@ -544,9 +549,13 @@ def main():
     print(f"parked(ip) removed: {len(parked)}, parked(ns) removed: {len(parked_ns)}, "
           f"tcp-dead removed: {len(tcp_dead)}, sale/cdn-dead removed: {len(sale_pages)}, "
           f"final: {len(final)}")
+    print(f"ns-suspect (NS 命中但页面正常，仅观测): {len(ns_suspect)}", flush=True)
     print(f"http_probe stat: {dict(PROBE_STAT.most_common())}", flush=True)
     Path("parked-ns.txt").write_text(
         "\n".join(f"{d}\t{parked_ns[d]}" for d in sorted(parked_ns)) + "\n", encoding="utf-8")
+    # NS 命中但页面正常 -> 只观测（MISP 列表含注册商默认 NS，不能据此剔）
+    Path("ns-suspect.txt").write_text(
+        "\n".join(f"{d}\t{ns_suspect[d]}" for d in sorted(ns_suspect)) + "\n", encoding="utf-8")
     Path("tcp-timeout.txt").write_text("\n".join(sorted(tcp_timeout)) + "\n", encoding="utf-8")
     # 只读诊断名单（不改判定）：供分析「443 挂但 80 活」「双端口全挂」两批的构成
     Path("http-only.txt").write_text("\n".join(sorted(http_only)) + "\n", encoding="utf-8")
@@ -567,7 +576,7 @@ def main():
 
     header = (
         "# proxy-lite —— 全量 proxy 上游逐域 DNS+TCP+HTTP 内容活性筛选（GitHub Actions, 海外直连）\n"
-        "# L1 剔 NXDOMAIN；L2 剔 parked 网段；L2b 剔停放商 NS 指纹（MISP parking-domain-ns）；\n"
+        "# L1 剔 NXDOMAIN；L2 剔 parked 网段；L2b 剔「停放商 NS + 站点不可达」组合（NS 单独命中只观测，不剔）；\n"
         "# L3 剔全端口 RST 死服务；L4 剔挂售页/CF 配置错误页（1000/1004/1014/1018/1023）；\n"
         "# CF「探测方被挡」类（1005-1012/1020）与「可能临时」类（1016/1033/530）一律保留；\n"
         "# unknown 与鉴权墙超时保守保留\n"

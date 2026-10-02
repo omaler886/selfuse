@@ -149,6 +149,19 @@ def get_ips(d: str):
     return []
 
 
+def tcp_alive(d: str, ips: list[str]) -> bool:
+    """L3 服务存活：对解析出的 IP 做 443/80 TCP 握手，握手成功才算有服务在跑。"""
+    for ip in ips[:3]:
+        for port in (443, 80):
+            try:
+                s = socket.create_connection((ip, port), timeout=3)
+                s.close()
+                return True
+            except Exception:
+                continue
+    return False
+
+
 def judge(d: str) -> str:
     s0 = random.randrange(3)
     st, cn = udp_query(d, SERVERS[s0])
@@ -222,34 +235,37 @@ def main():
     print("scan result:", stat, f"{time.time() - t0:.0f}s")
 
     alive = [d for d, v in res.items() if v == "alive"]
-    parked = {}
+    parked, tcp_dead = {}, []
 
     def work(d):
-        hits = [ip for ip in get_ips(d) if is_park(ip)]
-        if hits:
-            parked[d] = hits
+        ips = get_ips(d)
+        if any(is_park(ip) for ip in ips):
+            parked[d] = [ip for ip in ips if is_park(ip)]
+            return
+        if ips and not tcp_alive(d, ips):
+            tcp_dead.append(d)  # DNS 活但 443/80 都不握手：服务已死
 
-    with ThreadPoolExecutor(max_workers=100) as ex:
+    with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
-    final = sorted(d for d in alive if d not in parked)
-    print(f"parked removed: {len(parked)}, final: {len(final)}")
+    final = sorted(d for d in alive if d not in parked and d not in tcp_dead)
+    print(f"parked removed: {len(parked)}, tcp-dead removed: {len(tcp_dead)}, final: {len(final)}")
 
     if len(final) < MIN_ALIVE:
         print(f"gate failed: alive {len(final)} < {MIN_ALIVE}, refusing to write")
         sys.exit(1)
 
     header = (
-        "# proxy-lite —— 全量 proxy 上游逐域 DNS 活性筛选（GitHub Actions runner, 海外直连 UDP 53）\n"
-        "# 剔除 NXDOMAIN 死域与 parked 出售页（Bodis/Sedo/Above 特征段）；unknown 保守保留\n"
+        "# proxy-lite —— 全量 proxy 上游逐域 DNS+TCP 活性筛选（GitHub Actions runner, 海外直连）\n"
+        "# L1 剔 NXDOMAIN；L2 剔 parked 出售页（Bodis/Sedo/Above 特征段）；L3 剔 443/80 均不握手的死服务；unknown 保守保留\n"
         f"# 最近刷新: {time.strftime('%Y-%m-%d %H:%M UTC', time.gmtime())}  "
-        f"上游 {len(doms)} -> alive {len(alive)} - parked {len(parked)} = {len(final)}\n"
+        f"上游 {len(doms)} -> alive {len(alive)} - parked {len(parked)} - tcp-dead {len(tcp_dead)} = {len(final)}\n"
     )
     OUT.write_text(header + "\n".join(final) + "\n", encoding="utf-8", newline="\n")
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as f:
             f.write(
-                f"## proxy-lite refresh\n\nupstream {len(doms)} -> alive {len(alive)} -> parked -{len(parked)} -> **final {len(final)}**\n\n"
+                f"## proxy-lite refresh\n\nupstream {len(doms)} -> alive {len(alive)} -> parked -{len(parked)} -> tcp-dead -{len(tcp_dead)} -> **final {len(final)}**\n\n"
                 f"stat: `{stat}`\n")
     print("written", OUT)
 

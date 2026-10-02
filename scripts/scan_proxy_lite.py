@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json, os, random, socket, ssl, struct, sys, time, threading
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -197,9 +198,28 @@ SALE_MARKS = [
 ]
 
 
+# 标记表必须是 bytes —— body 是 bytes，`str in bytes` 会抛
+# TypeError: a bytes-like object is required, not 'str'。
+# 该异常曾被 http_probe 的 except 静默吞掉，导致所有站点落到 noresp、sale 恒为 0。
+SALE_MARKS_B = tuple(m.encode() for m in SALE_MARKS)
+
+
 def is_sale_page(body: bytes) -> bool:
+    if not body:
+        return False
     b = body.lower()
-    return any(m in b for m in SALE_MARKS)
+    return any(m in b for m in SALE_MARKS_B)
+
+
+# http_probe 结果分布 + 失败原因计数。修复前 sale 恒为 0 且无任何可见信号，
+# 靠这个分布才能确认 L4 真的在跑（noresp 里全是 443/80 的异常类型即为异常信号）。
+PROBE_STAT = Counter()
+
+
+def _verdict(data: bytes) -> str:
+    v = "sale" if is_sale_page(data) else "ok"
+    PROBE_STAT[v] += 1
+    return v
 
 
 def http_probe(d: str, v4: list[str]) -> str:
@@ -220,8 +240,9 @@ def http_probe(d: str, v4: list[str]) -> str:
                 if not chunk:
                     break
                 data += chunk
-            return "sale" if is_sale_page(data) else "ok"
-        except Exception:
+            return _verdict(data)
+        except Exception as e:
+            PROBE_STAT[f"err443/{type(e).__name__}"] += 1
             continue
         finally:
             if s:
@@ -240,8 +261,9 @@ def http_probe(d: str, v4: list[str]) -> str:
                 if not chunk:
                     break
                 data += chunk
-            return "sale" if is_sale_page(data) else "ok"
-        except Exception:
+            return _verdict(data)
+        except Exception as e:
+            PROBE_STAT[f"err80/{type(e).__name__}"] += 1
             continue
         finally:
             if s:
@@ -249,6 +271,7 @@ def http_probe(d: str, v4: list[str]) -> str:
                     s.close()
                 except Exception:
                     pass
+    PROBE_STAT["noresp"] += 1
     return "noresp"
 
 
@@ -350,6 +373,7 @@ def main():
     final = sorted(d for d in alive if d not in parked and d not in tcp_dead and d not in sale_pages)
     print(f"parked removed: {len(parked)}, tcp-dead removed: {len(tcp_dead)}, "
           f"sale/cdn-dead removed: {len(sale_pages)}, final: {len(final)}")
+    print(f"http_probe stat: {dict(PROBE_STAT.most_common())}", flush=True)
     Path("tcp-timeout.txt").write_text("\n".join(sorted(tcp_timeout)) + "\n", encoding="utf-8")
     Path("sale-pages.txt").write_text("\n".join(sorted(sale_pages)) + "\n", encoding="utf-8")
 

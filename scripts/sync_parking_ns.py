@@ -17,7 +17,12 @@ from pathlib import Path
 URL = "https://misp.github.io/misp-warninglists/lists/parking-domain-ns/list.json"
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "parking-ns.txt"
-ALLOW = {"wordpress.com", "one.com"}   # 建站托管商，非停放商 —— 误杀源，必须剔除
+# 白名单：MISP 列表里混着「非停放商」，直接匹配会大规模误杀。实测证据：
+#   markmonitor.com —— MarkMonitor 是企业品牌保护商（客户 PayPal / Nike / eBay / Best Buy），
+#                      实测命中 791 个域名，抽样全是 ebayenterprise.com / paypalme.com /
+#                      nikepromax.com / bestbuy-communityrelations.com 这类品牌官方域名，全被误杀。
+#   wordpress.com / one.com —— 建站托管商。
+ALLOW = {"wordpress.com", "one.com", "markmonitor.com"}
 MIN_ENTRIES = 50                       # 低于此数视为同步异常，拒绝覆盖
 
 

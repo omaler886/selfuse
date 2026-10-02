@@ -1,6 +1,6 @@
 # 停放商 NS 后缀库 —— 源: MISP misp-warninglists/lists/parking-domain-ns
-# version 20221024 | 原始 129 条 -> 去重 129 条 -> 白名单剔除 2 条 -> 127 条
-# 白名单（建站托管商，非停放商，勿匹配）: one.com, wordpress.com
+# version 20221024 | 原始 129 条 -> 去重 129 条 -> 白名单剔除 3 条 -> 126 条
+# 白名单（建站托管商，非停放商，勿匹配）: markmonitor.com, one.com, wordpress.com
 above.com
 afternic.com
 alter.com
@@ -51,7 +51,6 @@ kirklanddc.com
 koaladns.com
 magpiedns.com
 malkm.com
-markmonitor.com
 mijndomein.nl
 milesmx.com
 mytrafficmanagement.com

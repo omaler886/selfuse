@@ -5,7 +5,7 @@
 """
 from __future__ import annotations
 
-import json, os, random, socket, ssl, struct, sys, time, threading
+import json, os, random, re, socket, ssl, struct, sys, time, threading
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -155,7 +155,68 @@ def get_addrs(d: str):
     return out
 
 
-PROBE_PORTS = (443, 80, 8443)
+# ── L2b 停放商 NS 指纹 ────────────────────────────────────────────
+# 比页面内容更早、更稳的信号：域名一进停放商，NS 立刻切过去，页面可能还没挂上。
+# 数据源：MISP warninglists / parking-domain-ns（见 data/parking-ns.txt 头部注释）
+PARKING_NS: list[str] = []   # 由 load_parking_ns() 填充
+
+
+def load_parking_ns(path=None) -> int:
+    global PARKING_NS
+    p = Path(path) if path else (ROOT / "data" / "parking-ns.txt")
+    try:
+        lines = p.read_text(encoding="utf-8").splitlines()
+        # 按长度降序：最长后缀优先命中（如 ns1.undeveloped.com 优先于裸 undeveloped.com）
+        PARKING_NS = sorted(
+            (l.strip().lower().rstrip(".") for l in lines
+             if l.strip() and not l.lstrip().startswith("#")),
+            key=len, reverse=True)
+    except Exception as e:
+        print(f"warn: 停放商 NS 库未加载（{p}）: {e}", flush=True)
+        PARKING_NS = []
+    print(f"parking-ns 库: {len(PARKING_NS)} 条", flush=True)
+    return len(PARKING_NS)
+
+
+def match_parking_ns(ns_list) -> str | None:
+    """NS 后缀匹配，返回命中的后缀；未命中返回 None。"""
+    for ns in ns_list:
+        for suf in PARKING_NS:
+            if ns == suf or ns.endswith("." + suf):
+                return suf
+    return None
+
+
+def query_ns(d: str) -> list[str]:
+    """查 NS 记录（qtype=2），返回小写去尾点列表。NS rdata 可能带压缩指针，用 parse_name 解。"""
+    txid = random.randint(0, 65535)
+    s = get_sock()
+    for _ in range(2):
+        try:
+            s.sendto(build_q(d, txid, 2), (random.choice(SERVERS), 53))
+            buf, _ = s.recvfrom(4096)
+            if struct.unpack(">H", buf[0:2])[0] != txid:
+                continue
+            if buf[3] & 0x0F != 0:
+                return []
+            ancount = struct.unpack(">H", buf[6:8])[0]
+            out = []
+            for t, off, _rdlen, _r in parse_answers(buf, ancount):
+                if t == 2:  # NS
+                    name, _ = parse_name(buf, off)
+                    if name:
+                        out.append(name.lower().rstrip("."))
+            return out
+        except Exception:
+            continue
+    return []
+
+
+# L3 探测端口（补 CF 备用 HTTPS 端口 2053/2083/2087/2096 + 8080）
+PROBE_PORTS = (443, 80, 8443, 8080, 2053, 2083, 2087, 2096)
+
+# L4 响应读取上限：2048 -> 8192。停放页的跳转脚本/模板常落在 2KB 之后。
+MAX_BODY = 8192
 
 
 def tcp_probe(addrs) -> str:
@@ -187,32 +248,95 @@ def tcp_probe(addrs) -> str:
     return "refused" if refused else "timeout"
 
 
-# L4：挂售页/CDN 源站死的页面特征（命中即剔）
+# ── L4 内容层标记表 ──────────────────────────────────────────────
+# 三张表分工（依据 Cloudflare 官方 1xxx 错误码文档语义）：
+#   SALE_MARKS   挂售/停放页 + CF「配置错误」类   -> 命中即剔
+#   CF_KEEP_MARKS CF「探测方被挡」类              -> 站点活着，命中即强制保留
+#   CF_RECHECK    CF「可能临时」类                -> 保留，仅记入复检名单
 SALE_MARKS = [
+    # CF 配置错误类（放表头：同页多标记时优先记录结构化错误码）
+    "error 1000", "error 1004", "error 1014", "error 1018", "error 1023",
+    # 挂售 / 停放页
     "buy this domain", "domain for sale", "this domain is for sale",
     "domain may be for sale", "is for sale at", " domain sale",
     "bodis.com", "sedoparking", "hugedomains", "afternic", "dan.com/",
     "parklogic", "above.com", "namedrive", "domaincontrol.com",
-    "error 1000", "error 1016", "error 1033", "error 530",
     "origin is unreachable", "dns points to prohibited",
 ]
 
+# CF「探测方被挡」：站点活着，只是拒绝了我们的出口 IP/ASN/地区。
+# 1005 ASN banned / 1006-1008,1106 IP banned / 1009 country banned /
+# 1010 browser signature / 1011 hotlink / 1012 access denied /
+# 1015 rate limited / 1020 access denied
+CF_KEEP_MARKS = [
+    "error 1005", "error 1006", "error 1007", "error 1008", "error 1106",
+    "error 1009", "error 1010", "error 1011", "error 1012",
+    "error 1015", "error 1020",
+]
+
+# CF「可能临时」：源站解析失败 / 隧道故障 / 限流 —— 保留，仅记复检名单
+CF_RECHECK_MARKS = [
+    "error 1013", "error 1016", "error 1019", "error 1025",
+    "error 1033", "error 1034", "error 530",
+]
 
 # 标记表必须是 bytes —— body 是 bytes，`str in bytes` 会抛
 # TypeError: a bytes-like object is required, not 'str'。
 # 该异常曾被 http_probe 的 except 静默吞掉，导致所有站点落到 noresp、sale 恒为 0。
 SALE_MARKS_B = tuple(m.encode() for m in SALE_MARKS)
+CF_KEEP_MARKS_B = tuple(m.encode() for m in CF_KEEP_MARKS)
+CF_RECHECK_MARKS_B = tuple(m.encode() for m in CF_RECHECK_MARKS)
+
+# 停放商 host —— 用于 3xx Location 指向判定（HugeDomains 这类停放页 body 为空，
+# 标记只在 Location 头里）
+PARKING_HOSTS = (
+    "bodis.com", "sedoparking.com", "sedo.com", "hugedomains.com", "afternic.com",
+    "dan.com", "parklogic.com", "above.com", "namedrive.com", "domaincontrol.com",
+    "parkingcrew.net", "undeveloped.com", "sav.com", "squadhelp.com",
+    "brandbucket.com", "domainmarket.com", "perfectdomain.com", "ztomy.com",
+)
 
 
-def sale_mark(body: bytes) -> str | None:
-    """返回命中的标记（供 sale-pages.txt 落盘审计），未命中返回 None。"""
+def _first_hit(body: bytes, table: tuple) -> str | None:
     if not body:
         return None
     b = body.lower()
-    for m in SALE_MARKS_B:
+    for m in table:
         if m in b:
             return m.decode()
     return None
+
+
+def cf_keep_hit(body: bytes) -> str | None:
+    """命中 CF「探测方被挡」标记 -> 站点活着，强制保留。"""
+    return _first_hit(body, CF_KEEP_MARKS_B)
+
+
+def cf_recheck_hit(body: bytes) -> str | None:
+    """命中 CF「可能临时」标记 -> 保留，仅记入复检名单。"""
+    return _first_hit(body, CF_RECHECK_MARKS_B)
+
+
+def redirect_to_parking(data: bytes) -> str | None:
+    """3xx 且 Location 指向已知停放商 -> 返回停放商标识。
+    覆盖 HugeDomains 这类「302 + 空 body，标记只在 Location 头」的停放页。"""
+    head, _, _ = data.partition(b"\r\n\r\n")
+    # 注意 HTTP/2 状态行是 `HTTP/2 302`（无小版本号），不能写成 HTTP/\d\.\d
+    if not re.match(rb"HTTP/[\d.]+\s+3\d\d", head):
+        return None
+    m = re.search(rb"\r\nlocation:\s*(\S+)", b"\r\n" + head, re.I)
+    if not m:
+        return None
+    loc = m.group(1).decode("latin1", "replace").lower()
+    for h in PARKING_HOSTS:
+        if h in loc:
+            return h
+    return None
+
+
+def sale_mark(body: bytes) -> str | None:
+    """返回命中的挂售标记（供 sale-pages.txt 落盘审计），未命中返回 None。"""
+    return _first_hit(body, SALE_MARKS_B)
 
 
 def is_sale_page(body: bytes) -> bool:
@@ -225,10 +349,25 @@ PROBE_STAT = Counter()
 
 
 def _verdict(data: bytes, via: str) -> tuple[str, str | None, str]:
+    # 1) 挂售/停放页 + CF 配置错误类 -> 剔
     mk = sale_mark(data)
+    if not mk:
+        rh = redirect_to_parking(data)   # 3xx 指向停放商（body 为空的场景）
+        if rh:
+            mk = f"redirect:{rh}"
     if mk:
         PROBE_STAT["sale"] += 1
         return "sale", mk, via
+    # 2) CF「探测方被挡」-> 站点活着，强制保留（单独计数，便于观察 DC IP 被挡规模）
+    keep = cf_keep_hit(data)
+    if keep:
+        PROBE_STAT[f"cfkeep/{keep.replace(' ', '_')}"] += 1
+        return "ok", None, via
+    # 3) CF「可能临时」-> 保留，仅记复检
+    rk = cf_recheck_hit(data)
+    if rk:
+        PROBE_STAT[f"cfrecheck/{rk.replace(' ', '_')}"] += 1
+        return "ok", None, via
     PROBE_STAT["ok"] += 1
     return "ok", None, via
 
@@ -248,8 +387,8 @@ def http_probe(d: str, v4: list[str]) -> tuple[str, str | None, str | None]:
             ss = ctx.wrap_socket(s, server_hostname=d)
             ss.sendall(ua)
             data = b""
-            while len(data) < 2048:
-                chunk = ss.recv(1024)
+            while len(data) < MAX_BODY:
+                chunk = ss.recv(2048)
                 if not chunk:
                     break
                 data += chunk
@@ -269,8 +408,8 @@ def http_probe(d: str, v4: list[str]) -> tuple[str, str | None, str | None]:
             s = socket.create_connection((ip, 80), timeout=5)
             s.sendall(ua)
             data = b""
-            while len(data) < 2048:
-                chunk = s.recv(1024)
+            while len(data) < MAX_BODY:
+                chunk = s.recv(2048)
                 if not chunk:
                     break
                 data += chunk
@@ -346,6 +485,7 @@ def load_upstream_domains() -> list[str]:
 
 
 def main():
+    load_parking_ns()
     doms = load_upstream_domains()
     t0 = time.time()
     res = {}
@@ -362,6 +502,7 @@ def main():
 
     alive = [d for d, v in res.items() if v == "alive"]
     parked, tcp_dead, tcp_timeout, sale_pages = {}, [], [], {}  # sale_pages: domain -> 命中标记
+    parked_ns = {}  # L2b: domain -> 命中的停放商 NS 后缀
     # 只读诊断：均「保守保留」，仅导出名单供后续分析，不影响本层判定
     http_only, noresp = [], []  # 443 挂但 80 活 / 443+80 双端口全挂
 
@@ -373,6 +514,13 @@ def main():
             return
         if not addrs:
             return
+        # L2b: 停放商 NS 指纹 —— 比页面内容更早更稳，命中即剔
+        ns = query_ns(d)
+        if ns:
+            hit_ns = match_parking_ns(ns)
+            if hit_ns:
+                parked_ns[d] = hit_ns
+                return
         verdict = tcp_probe(addrs)
         if verdict == "refused":
             tcp_dead.append(d)  # 全端口 RST：服务确实没了
@@ -390,10 +538,15 @@ def main():
 
     with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
-    final = sorted(d for d in alive if d not in parked and d not in tcp_dead and d not in sale_pages)
-    print(f"parked removed: {len(parked)}, tcp-dead removed: {len(tcp_dead)}, "
-          f"sale/cdn-dead removed: {len(sale_pages)}, final: {len(final)}")
+    final = sorted(d for d in alive
+                   if d not in parked and d not in parked_ns
+                   and d not in tcp_dead and d not in sale_pages)
+    print(f"parked(ip) removed: {len(parked)}, parked(ns) removed: {len(parked_ns)}, "
+          f"tcp-dead removed: {len(tcp_dead)}, sale/cdn-dead removed: {len(sale_pages)}, "
+          f"final: {len(final)}")
     print(f"http_probe stat: {dict(PROBE_STAT.most_common())}", flush=True)
+    Path("parked-ns.txt").write_text(
+        "\n".join(f"{d}\t{parked_ns[d]}" for d in sorted(parked_ns)) + "\n", encoding="utf-8")
     Path("tcp-timeout.txt").write_text("\n".join(sorted(tcp_timeout)) + "\n", encoding="utf-8")
     # 只读诊断名单（不改判定）：供分析「443 挂但 80 活」「双端口全挂」两批的构成
     Path("http-only.txt").write_text("\n".join(sorted(http_only)) + "\n", encoding="utf-8")
@@ -413,17 +566,21 @@ def main():
         sys.exit(1)
 
     header = (
-        "# proxy-lite —— 全量 proxy 上游逐域 DNS+TCP+HTTP 内容四层活性筛选（GitHub Actions, 海外直连）\n"
-        "# L1 剔 NXDOMAIN；L2 剔 parked 特征段；L3 剔全端口 RST 死服务；L4 剔挂售页/CDN 源站死错误页；unknown 与鉴权墙超时保守保留\n"
+        "# proxy-lite —— 全量 proxy 上游逐域 DNS+TCP+HTTP 内容活性筛选（GitHub Actions, 海外直连）\n"
+        "# L1 剔 NXDOMAIN；L2 剔 parked 网段；L2b 剔停放商 NS 指纹（MISP parking-domain-ns）；\n"
+        "# L3 剔全端口 RST 死服务；L4 剔挂售页/CF 配置错误页（1000/1004/1014/1018/1023）；\n"
+        "# CF「探测方被挡」类（1005-1012/1020）与「可能临时」类（1016/1033/530）一律保留；\n"
+        "# unknown 与鉴权墙超时保守保留\n"
         f"# 最近刷新: {time.strftime('%Y-%m-%d %H:%M UTC', time.gmtime())}  "
-        f"上游 {len(doms)} -> alive {len(alive)} - parked {len(parked)} - tcp-dead {len(tcp_dead)} - sale {len(sale_pages)} = {len(final)}\n"
+        f"上游 {len(doms)} -> alive {len(alive)} - parked(ip) {len(parked)} - parked(ns) {len(parked_ns)}"
+        f" - tcp-dead {len(tcp_dead)} - sale {len(sale_pages)} = {len(final)}\n"
     )
     OUT.write_text(header + "\n".join(final) + "\n", encoding="utf-8", newline="\n")
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as f:
             f.write(
-                f"## proxy-lite refresh\n\nupstream {len(doms)} -> alive {len(alive)} -> parked -{len(parked)} -> tcp-dead -{len(tcp_dead)} -> sale/cdn-dead -{len(sale_pages)} -> **final {len(final)}**\n\n"
+                f"## proxy-lite refresh\n\nupstream {len(doms)} -> alive {len(alive)} -> parked(ip) -{len(parked)} -> parked(ns) -{len(parked_ns)} -> tcp-dead -{len(tcp_dead)} -> sale/cdn-dead -{len(sale_pages)} -> **final {len(final)}**\n\n"
                 f"stat: `{stat}`\n")
     print("written", OUT)
 

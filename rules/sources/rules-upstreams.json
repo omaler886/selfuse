@@ -229,8 +229,8 @@
       "emit_list": false,
       "emit_mrs": true,
       "bounds": [
-        10,
-        5000
+        20000,
+        45000
       ],
       "sources": [],
       "custom": {

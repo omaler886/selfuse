@@ -54,6 +54,22 @@ jobs:
           path: sale-pages.txt
           if-no-files-found: ignore
 
+      - name: Upload http-only list (443 failed / 80 ok, kept)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: http-only
+          path: http-only.txt
+          if-no-files-found: ignore
+
+      - name: Upload noresp list (443+80 both failed, kept)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noresp
+          path: noresp.txt
+          if-no-files-found: ignore
+
       - name: Commit refreshed artifacts
         run: |
           git config user.name "github-actions[bot]"

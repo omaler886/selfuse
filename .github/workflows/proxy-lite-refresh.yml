@@ -1,0 +1,49 @@
+name: Refresh proxy-lite (DNS liveness)
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # 每周一 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install cores
+        run: |
+          set -e
+          MIHOMO_TAG=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r .tag_name)
+          curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_TAG}/mihomo-linux-amd64-${MIHOMO_TAG}.gz" | gunzip > /usr/local/bin/mihomo
+          chmod +x /usr/local/bin/mihomo
+          SB_TAG=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r .tag_name)
+          curl -sL "https://github.com/SagerNet/sing-box/releases/download/${SB_TAG}/sing-box-${SB_TAG#v}-linux-amd64.tar.gz" \
+            | tar xz --strip-components=1 -C /usr/local/bin sing-box-${SB_TAG#v}-linux-amd64/sing-box
+          mihomo -v | head -1
+
+      - name: Scan upstream liveness (UDP 53, overseas runner)
+        run: python3 scripts/scan_proxy_lite.py
+
+      - name: Build proxy-lite (mrs + srs)
+        run: |
+          MIHOMO_BIN=/usr/local/bin/mihomo SINGBOX_BIN=/usr/local/bin/sing-box \
+            python3 scripts/build_all_rules.py --only proxy-lite
+
+      - name: Commit refreshed artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- custom/proxy-lite.domain.txt proxy-lite.mrs proxy-lite.srs rules/counts.json
+          git diff --staged --quiet && echo "no changes" || {
+            git commit -m "refresh: proxy-lite liveness scan $(date -u +%F)"
+            git push
+          }

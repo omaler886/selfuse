@@ -5,7 +5,7 @@
 """
 from __future__ import annotations
 
-import json, os, random, socket, struct, sys, time, threading
+import json, os, random, socket, ssl, struct, sys, time, threading
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -186,6 +186,72 @@ def tcp_probe(addrs) -> str:
     return "refused" if refused else "timeout"
 
 
+# L4：挂售页/CDN 源站死的页面特征（命中即剔）
+SALE_MARKS = [
+    "buy this domain", "domain for sale", "this domain is for sale",
+    "domain may be for sale", "is for sale at", " domain sale",
+    "bodis.com", "sedoparking", "hugedomains", "afternic", "dan.com/",
+    "parklogic", "above.com", "namedrive", "domaincontrol.com",
+    "error 1000", "error 1016", "error 1033", "error 530",
+    "origin is unreachable", "dns points to prohibited",
+]
+
+
+def is_sale_page(body: bytes) -> bool:
+    b = body.lower()
+    return any(m in b for m in SALE_MARKS)
+
+
+def http_probe(d: str, v4: list[str]) -> str:
+    """L4 内容层：HTTPS(SNI=d, 不验证书) 优先，失败退 HTTP80。返回 sale / ok / noresp。"""
+    ua = f"GET / HTTP/1.1\r\nHost: {d}\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\nAccept: */*\r\nConnection: close\r\n\r\n".encode()
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    for ip in v4[:2]:
+        s = None
+        try:
+            s = socket.create_connection((ip, 443), timeout=5)
+            ss = ctx.wrap_socket(s, server_hostname=d)
+            ss.sendall(ua)
+            data = b""
+            while len(data) < 2048:
+                chunk = ss.recv(1024)
+                if not chunk:
+                    break
+                data += chunk
+            return "sale" if is_sale_page(data) else "ok"
+        except Exception:
+            continue
+        finally:
+            if s:
+                try:
+                    s.close()
+                except Exception:
+                    pass
+    for ip in v4[:2]:
+        s = None
+        try:
+            s = socket.create_connection((ip, 80), timeout=5)
+            s.sendall(ua)
+            data = b""
+            while len(data) < 2048:
+                chunk = s.recv(1024)
+                if not chunk:
+                    break
+                data += chunk
+            return "sale" if is_sale_page(data) else "ok"
+        except Exception:
+            continue
+        finally:
+            if s:
+                try:
+                    s.close()
+                except Exception:
+                    pass
+    return "noresp"
+
+
 def judge(d: str) -> str:
     s0 = random.randrange(3)
     st, cn = udp_query(d, SERVERS[s0])
@@ -259,7 +325,7 @@ def main():
     print("scan result:", stat, f"{time.time() - t0:.0f}s")
 
     alive = [d for d, v in res.items() if v == "alive"]
-    parked, tcp_dead, tcp_timeout = {}, [], []
+    parked, tcp_dead, tcp_timeout, sale_pages = {}, [], [], []
 
     def work(d):
         addrs = get_addrs(d)
@@ -267,36 +333,42 @@ def main():
         if any(is_park(ip) for ip in v4):
             parked[d] = [ip for ip in v4 if is_park(ip)]
             return
-        if addrs:
-            verdict = tcp_probe(addrs)
-            if verdict == "refused":
-                tcp_dead.append(d)  # 全端口 RST：服务确实没了
-            elif verdict == "timeout":
-                tcp_timeout.append(d)  # 鉴权墙/防火墙 drop：保留，名单导出供人工核查
+        if not addrs:
+            return
+        verdict = tcp_probe(addrs)
+        if verdict == "refused":
+            tcp_dead.append(d)  # 全端口 RST：服务确实没了
+            return
+        if verdict == "timeout":
+            tcp_timeout.append(d)  # 鉴权墙/防火墙 drop：保留
+            return
+        if http_probe(d, v4) == "sale":
+            sale_pages.append(d)  # L4 内容层：挂售页 / CDN 源站死错误页
 
     with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
-    final = sorted(d for d in alive if d not in parked and d not in tcp_dead)
+    final = sorted(d for d in alive if d not in parked and d not in tcp_dead and d not in sale_pages)
     print(f"parked removed: {len(parked)}, tcp-dead removed: {len(tcp_dead)}, "
-          f"tcp-timeout kept: {len(tcp_timeout)}, final: {len(final)}")
+          f"sale/cdn-dead removed: {len(sale_pages)}, final: {len(final)}")
     Path("tcp-timeout.txt").write_text("\n".join(sorted(tcp_timeout)) + "\n", encoding="utf-8")
+    Path("sale-pages.txt").write_text("\n".join(sorted(sale_pages)) + "\n", encoding="utf-8")
 
     if len(final) < MIN_ALIVE:
         print(f"gate failed: alive {len(final)} < {MIN_ALIVE}, refusing to write")
         sys.exit(1)
 
     header = (
-        "# proxy-lite —— 全量 proxy 上游逐域 DNS+TCP 活性筛选（GitHub Actions runner, 海外直连）\n"
-        "# L1 剔 NXDOMAIN；L2 剔 parked 出售页（Bodis/Sedo/Above 特征段）；L3 剔 443/80 均不握手的死服务；unknown 保守保留\n"
+        "# proxy-lite —— 全量 proxy 上游逐域 DNS+TCP+HTTP 内容四层活性筛选（GitHub Actions, 海外直连）\n"
+        "# L1 剔 NXDOMAIN；L2 剔 parked 特征段；L3 剔全端口 RST 死服务；L4 剔挂售页/CDN 源站死错误页；unknown 与鉴权墙超时保守保留\n"
         f"# 最近刷新: {time.strftime('%Y-%m-%d %H:%M UTC', time.gmtime())}  "
-        f"上游 {len(doms)} -> alive {len(alive)} - parked {len(parked)} - tcp-dead {len(tcp_dead)} = {len(final)}\n"
+        f"上游 {len(doms)} -> alive {len(alive)} - parked {len(parked)} - tcp-dead {len(tcp_dead)} - sale {len(sale_pages)} = {len(final)}\n"
     )
     OUT.write_text(header + "\n".join(final) + "\n", encoding="utf-8", newline="\n")
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as f:
             f.write(
-                f"## proxy-lite refresh\n\nupstream {len(doms)} -> alive {len(alive)} -> parked -{len(parked)} -> tcp-dead -{len(tcp_dead)} -> **final {len(final)}**\n\n"
+                f"## proxy-lite refresh\n\nupstream {len(doms)} -> alive {len(alive)} -> parked -{len(parked)} -> tcp-dead -{len(tcp_dead)} -> sale/cdn-dead -{len(sale_pages)} -> **final {len(final)}**\n\n"
                 f"stat: `{stat}`\n")
     print("written", OUT)
 

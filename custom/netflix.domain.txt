@@ -1,0 +1,2 @@
+speed.cloudflare.com
+www.speedtest.net

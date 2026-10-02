@@ -1,0 +1,8 @@
+# IDM 破解校验域名（现靠 hosts 钉死，可叠加 REJECT）
+registidm.com
+tonec.com
+internetdownloadmanager.com
+www.internetdownloadmanager.com
+mirror.internetdownloadmanager.com
+mirror2.internetdownloadmanager.com
+mirror3.internetdownloadmanager.com

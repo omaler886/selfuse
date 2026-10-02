@@ -1,0 +1,3 @@
+# 定向直连域名 -> custom-direct
+ts.net
+100.in-addr.arpa

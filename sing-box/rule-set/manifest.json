@@ -1,0 +1,286 @@
+{
+  "generated_at_utc": "2026-03-30T15:24:55.548994+00:00",
+  "count": 45,
+  "items": [
+    {
+      "tag": "adguard_sdns",
+      "binary_file": "sing-box/rule-set/adguard_sdns.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/adguard_sdns.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "Ads",
+      "binary_file": "sing-box/rule-set/Ads.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/Ads.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "cn_domain",
+      "binary_file": "sing-box/rule-set/cn_domain.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cn_domain.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "huya_pcdn",
+      "binary_file": "sing-box/rule-set/huya_pcdn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/huya_pcdn.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "bilibili_pcdn",
+      "binary_file": "sing-box/rule-set/bilibili_pcdn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/bilibili_pcdn.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "httpdns-cn@ads",
+      "binary_file": "sing-box/rule-set/httpdns-cn@ads.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/httpdns-cn%40ads.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ads",
+      "binary_file": "sing-box/rule-set/ads.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ads.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ad",
+      "binary_file": "sing-box/rule-set/ad.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ad.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "zhihu",
+      "binary_file": "sing-box/rule-set/zhihu.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/zhihu.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "xiaohongshu",
+      "binary_file": "sing-box/rule-set/xiaohongshu.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/xiaohongshu.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "DouYin",
+      "binary_file": "sing-box/rule-set/DouYin.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/DouYin.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "sina",
+      "binary_file": "sing-box/rule-set/sina.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/sina.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "direct_domains",
+      "binary_file": "sing-box/rule-set/direct_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/direct_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/direct_domains.json"
+    },
+    {
+      "tag": "private",
+      "binary_file": "sing-box/rule-set/private.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/private.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "private-ip",
+      "binary_file": "sing-box/rule-set/private-ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/private-ip.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ntp",
+      "binary_file": "sing-box/rule-set/ntp.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ntp.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "applications",
+      "binary_file": "sing-box/rule-set/applications.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/applications.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "cn-game",
+      "binary_file": "sing-box/rule-set/cn-game.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cn-game.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "trackerslist",
+      "binary_file": "sing-box/rule-set/trackerslist.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/trackerslist.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "fcm",
+      "binary_file": "sing-box/rule-set/fcm.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/fcm.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "epicgames",
+      "binary_file": "sing-box/rule-set/epicgames.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/epicgames.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ix_domains",
+      "binary_file": "sing-box/rule-set/ix_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ix_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/ix_domains.json"
+    },
+    {
+      "tag": "flow_domains",
+      "binary_file": "sing-box/rule-set/flow_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/flow_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/flow_domains.json"
+    },
+    {
+      "tag": "hongkong_balancer_domains",
+      "binary_file": "sing-box/rule-set/hongkong_balancer_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hongkong_balancer_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/hongkong_balancer_domains.json"
+    },
+    {
+      "tag": "hongkong_domains",
+      "binary_file": "sing-box/rule-set/hongkong_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/hongkong_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/hongkong_domains.json"
+    },
+    {
+      "tag": "bwg_domains",
+      "binary_file": "sing-box/rule-set/bwg_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/bwg_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/bwg_domains.json"
+    },
+    {
+      "tag": "ehentai",
+      "binary_file": "sing-box/rule-set/ehentai.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ehentai.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "netflix",
+      "binary_file": "sing-box/rule-set/netflix.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/netflix.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "cdn_domains",
+      "binary_file": "sing-box/rule-set/cdn_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cdn_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/cdn_domains.json"
+    },
+    {
+      "tag": "onedrive",
+      "binary_file": "sing-box/rule-set/onedrive.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/onedrive.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "us_domains",
+      "binary_file": "sing-box/rule-set/us_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/us_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/us_domains.json"
+    },
+    {
+      "tag": "talkatone",
+      "binary_file": "sing-box/rule-set/talkatone.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/talkatone.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "spotify",
+      "binary_file": "sing-box/rule-set/spotify.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/spotify.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "japan_domains",
+      "binary_file": "sing-box/rule-set/japan_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/japan_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/japan_domains.json"
+    },
+    {
+      "tag": "dlsite",
+      "binary_file": "sing-box/rule-set/dlsite.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/dlsite.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "google_domains",
+      "binary_file": "sing-box/rule-set/google_domains.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_domains.srs",
+      "type": "inline-compiled",
+      "source_file": "sing-box/rule-source/google_domains.json"
+    },
+    {
+      "tag": "google_cn",
+      "binary_file": "sing-box/rule-set/google_cn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_cn.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "google",
+      "binary_file": "sing-box/rule-set/google.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "telegram",
+      "binary_file": "sing-box/rule-set/telegram.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/telegram.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "ai",
+      "binary_file": "sing-box/rule-set/ai.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/ai.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "geolocation-!cn",
+      "binary_file": "sing-box/rule-set/geolocation-!cn.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/geolocation-%21cn.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "google_ip",
+      "binary_file": "sing-box/rule-set/google_ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/google_ip.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "telegramip",
+      "binary_file": "sing-box/rule-set/telegramip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/telegramip.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "netflix-ip",
+      "binary_file": "sing-box/rule-set/netflix-ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/netflix-ip.srs",
+      "type": "mirrored-remote"
+    },
+    {
+      "tag": "cn_ip",
+      "binary_file": "sing-box/rule-set/cn_ip.srs",
+      "url": "https://raw.githubusercontent.com/omaler886/selfuse/main/sing-box/rule-set/cn_ip.srs",
+      "type": "mirrored-remote"
+    }
+  ]
+}

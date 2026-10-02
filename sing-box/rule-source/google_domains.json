@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain_suffix": "googleapis.cn"
+    },
+    {
+      "domain_suffix": "gstatic.com"
+    },
+    {
+      "domain": "gemini.google.com"
+    },
+    {
+      "domain": "proactivebackend-pa.googleapis.com"
+    },
+    {
+      "domain": "aisandbox-pa.googleapis.com"
+    },
+    {
+      "domain": "robinfrontend-pa.googleapis.com"
+    },
+    {
+      "domain": "aistudio.google.com"
+    },
+    {
+      "domain": "alkalimakersuite-pa.clients6.google.com"
+    },
+    {
+      "domain": "generativelanguage.googleapis.com"
+    },
+    {
+      "domain": "alkalicore-pa.clients6.google.com"
+    },
+    {
+      "domain": "waa-pa.clients6.google.com"
+    }
+  ]
+}

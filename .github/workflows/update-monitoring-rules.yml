@@ -1,0 +1,87 @@
+name: Update ad rule sets
+
+on:
+  schedule:
+    - cron: "23 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test rule updater
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Download mihomo
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="$(gh api repos/MetaCubeX/mihomo/releases/latest --jq '.tag_name')"
+          url="https://github.com/MetaCubeX/mihomo/releases/download/${tag}/mihomo-linux-amd64-v1-${tag}.gz"
+          curl -fsSL "$url" -o mihomo.gz
+          gzip -d mihomo.gz
+          chmod +x mihomo
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Download sing-box
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="$(gh api repos/SagerNet/sing-box/releases/latest --jq '.tag_name')"
+          version="${tag#v}"
+          url="https://github.com/SagerNet/sing-box/releases/download/${tag}/sing-box-${version}-linux-amd64.tar.gz"
+          curl -fsSL "$url" -o sing-box.tar.gz
+          tar -xzf sing-box.tar.gz
+          mv "sing-box-${version}-linux-amd64/sing-box" sing-box-bin
+          chmod +x sing-box-bin
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update monitoring rules
+        run: python3 scripts/update_monitoring_rules.py ./mihomo
+
+      - name: Update ad and PCDN rules
+        run: python3 scripts/update_ad_pcdn_rules.py ./mihomo
+
+      - name: Update merged ad rules
+        run: python3 scripts/update_merged_ad_rules.py ./mihomo ./sing-box-bin
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          paths=(
+            monitoring-block.mrs
+            monitoring-block-ip.mrs
+            ads-cn.mrs
+            ads-global.mrs
+            pcdn.mrs
+            full.mrs
+            lite.mrs
+            global.mrs
+            sing-box/rule-set/full.srs
+            sing-box/rule-set/lite.srs
+            sing-box/rule-set/global.srs
+            ad-domain.mrs
+            ad-ip.mrs
+            rules/sources/ad-upstreams.json
+          )
+
+          if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
+            echo "No rule changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${paths[@]}"
+          git commit -m "Update generated ad rule sets"
+          git push

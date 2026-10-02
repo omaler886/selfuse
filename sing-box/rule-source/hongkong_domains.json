@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain": "www.cityheaven.net"
+    },
+    {
+      "domain_suffix": "linux.do"
+    }
+  ]
+}

@@ -1,0 +1,544 @@
+{
+  "_comment": "全托管规则清单。kind: meta_list=MetaCubeX geosite classical / meta_geoip=MetaCubeX geoip classical / dw_list=DustinWin release list / yixuan=YiXuanZX payload / felix=dnsmasq-china-list / surge=Surge classical / plain_domain / plain_cidr。custom-only 集sources留空。",
+  "sets": [
+    {
+      "name": "cn",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        120000,
+        160000
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.list"
+        },
+        {
+          "kind": "felix",
+          "url": "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
+        },
+        {
+          "kind": "yixuan",
+          "url": "https://raw.githubusercontent.com/YiXuanZX/rules/main/ruleset/cn.txt"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "cn_ip",
+      "behavior": "ipcidr",
+      "emit_list": false,
+      "bounds": [
+        10000,
+        40000
+      ],
+      "sources": [
+        {
+          "kind": "meta_geoip",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.list"
+        },
+        {
+          "kind": "plain_cidr",
+          "url": "https://raw.githubusercontent.com/NobyDa/geoip/release/text/cn.txt"
+        }
+      ],
+      "custom": {
+        "ip": [
+          "direct.ip.txt"
+        ]
+      }
+    },
+    {
+      "name": "private",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        10,
+        5000
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "private-ip",
+      "behavior": "ipcidr",
+      "emit_list": false,
+      "bounds": [
+        10,
+        2000
+      ],
+      "sources": [
+        {
+          "kind": "meta_geoip",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "games-cn",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        250,
+        800
+      ],
+      "sources": [
+        {
+          "kind": "dw_list",
+          "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games-cn.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "google-cn",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        100,
+        400
+      ],
+      "sources": [
+        {
+          "kind": "dw_list",
+          "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/google-cn.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "apple-cn",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        150,
+        500
+      ],
+      "sources": [
+        {
+          "kind": "dw_list",
+          "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/apple-cn.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "microsoft-cn",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        120,
+        400
+      ],
+      "sources": [
+        {
+          "kind": "dw_list",
+          "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/microsoft-cn.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "trackerslist",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        30,
+        400
+      ],
+      "sources": [
+        {
+          "kind": "dw_list",
+          "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/trackerslist.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "ntp",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        10,
+        600
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ntp.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "ai",
+      "behavior": "domain",
+      "classical": true,
+      "emit_list": true,
+      "bounds": [
+        150,
+        1500
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.list"
+        },
+        {
+          "kind": "dw_list",
+          "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ai.list"
+        },
+        {
+          "kind": "surge",
+          "url": "https://ruleset.skk.moe/List/non_ip/ai.conf"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "proxy",
+      "behavior": "domain",
+      "classical": true,
+      "emit_list": true,
+      "bounds": [
+        25000,
+        45000
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.list"
+        },
+        {
+          "kind": "surge",
+          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_All.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "google",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        400,
+        4000
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.list"
+        }
+      ],
+      "custom": {
+        "domain": [
+          "google.domain.txt"
+        ]
+      }
+    },
+    {
+      "name": "google_ip",
+      "behavior": "ipcidr",
+      "emit_list": false,
+      "bounds": [
+        10,
+        20000
+      ],
+      "sources": [
+        {
+          "kind": "meta_geoip",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "telegram",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        20,
+        1000
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "telegramip",
+      "behavior": "ipcidr",
+      "emit_list": false,
+      "bounds": [
+        5,
+        500
+      ],
+      "sources": [
+        {
+          "kind": "meta_geoip",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "netflix",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        20,
+        1500
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.list"
+        }
+      ],
+      "custom": {
+        "domain": [
+          "netflix.domain.txt"
+        ]
+      }
+    },
+    {
+      "name": "netflix-ip",
+      "behavior": "ipcidr",
+      "emit_list": false,
+      "bounds": [
+        5,
+        2000
+      ],
+      "sources": [
+        {
+          "kind": "meta_geoip",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "spotify",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        20,
+        1000
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "discord",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        10,
+        800
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/discord.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "ehentai",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        5,
+        500
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/ehentai.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "onedrive",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        5,
+        1500
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/onedrive.list"
+        },
+        {
+          "kind": "plain_domain",
+          "url": "https://raw.githubusercontent.com/xishang0128/rules/main/sharepoint.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "talkatone",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        5,
+        500
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/talkatone.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "epicgames",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        5,
+        500
+      ],
+      "sources": [
+        {
+          "kind": "meta_list",
+          "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/epicgames.list"
+        }
+      ],
+      "custom": {}
+    },
+    {
+      "name": "custom-direct",
+      "behavior": "domain",
+      "emit_list": true,
+      "bounds": [
+        1,
+        200
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "direct.domain.txt"
+        ]
+      }
+    },
+    {
+      "name": "custom-direct-ip",
+      "behavior": "ipcidr",
+      "emit_list": true,
+      "bounds": [
+        1,
+        100
+      ],
+      "sources": [],
+      "custom": {
+        "ip": [
+          "direct.ip.txt"
+        ]
+      }
+    },
+    {
+      "name": "custom-us",
+      "behavior": "domain",
+      "classical": true,
+      "emit_list": true,
+      "emit_mrs": false,
+      "bounds": [
+        5,
+        200
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "us.domain.txt"
+        ],
+        "keyword": [
+          "us.keyword.txt"
+        ],
+        "ip": [
+          "us.ip.txt"
+        ]
+      }
+    },
+    {
+      "name": "custom-cdn",
+      "behavior": "domain",
+      "emit_list": true,
+      "bounds": [
+        1,
+        100
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "cdn.domain.txt"
+        ]
+      }
+    },
+    {
+      "name": "custom-hk",
+      "behavior": "domain",
+      "emit_list": true,
+      "bounds": [
+        1,
+        100
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "hk.domain.txt"
+        ]
+      }
+    },
+    {
+      "name": "custom-netflix",
+      "behavior": "domain",
+      "emit_list": true,
+      "bounds": [
+        1,
+        100
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "netflix.domain.txt"
+        ]
+      }
+    },
+    {
+      "name": "custom-reject",
+      "behavior": "domain",
+      "emit_list": true,
+      "bounds": [
+        1,
+        200
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "reject.domain.txt"
+        ]
+      }
+    }
+  ]
+}

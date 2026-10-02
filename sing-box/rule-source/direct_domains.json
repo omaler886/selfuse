@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain_suffix": "jsdelivr.net"
+    },
+    {
+      "domain_suffix": "100.in-addr.arpa"
+    },
+    {
+      "domain_suffix": "ts.net"
+    },
+    {
+      "domain": "tabs.aerith.dpdns.org"
+    },
+    {
+      "domain": "subs.spems.dpdns.org"
+    },
+    {
+      "domain": "packs.mtldss.top"
+    },
+    {
+      "domain": "moshan.elfee.dpdns.org"
+    },
+    {
+      "domain": "buloud.aerith.dpdns.org"
+    },
+    {
+      "domain": "sub2api.spems.dpdns.org"
+    }
+  ]
+}

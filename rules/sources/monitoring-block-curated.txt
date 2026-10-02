@@ -1,0 +1,28 @@
+# Curated monitoring endpoints only.
+# Keep only collection, telemetry, auth-SDK, app-backend, or upload endpoints.
+# Do not add normal government, ISP, manufacturer, report, or service portal domains.
+app.gjfzpt.cn
+auth.wosms.cn
+cmpassport.com
+cmpassport.com.cn
+config.cmpassport.com
+enrichgw.10010.com
+fzapp.gjfzpt.cn
+fzapph5v1.gjfzpt.cn
+gjfzpt.cn
+hap.10010.com
+hmrz.wo.cn
+hs.wosms.cn
+id.mail.wo.cn
+id6.me
+log1.cmpassport.com
+mdn.open.wo.cn
+nishub1.10010.com
+onekey1.cmpassport.com
+open.e.189.cn
+opencloud.wostore.cn
+oss.gjfzpt.cn
+smsks1.cmpassport.com
+verify.cmpassport.com
+wap.cmpassport.com
+www.cmpassport.com

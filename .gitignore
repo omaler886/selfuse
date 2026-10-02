@@ -1,0 +1,8 @@
+.rule-build/
+__pycache__/
+ads-cn.txt
+ads-global.txt
+monitoring-block.txt
+monitoring-block-ip.txt
+pcdn.txt
+mihomo

@@ -204,11 +204,19 @@ SALE_MARKS = [
 SALE_MARKS_B = tuple(m.encode() for m in SALE_MARKS)
 
 
-def is_sale_page(body: bytes) -> bool:
+def sale_mark(body: bytes) -> str | None:
+    """返回命中的标记（供 sale-pages.txt 落盘审计），未命中返回 None。"""
     if not body:
-        return False
+        return None
     b = body.lower()
-    return any(m in b for m in SALE_MARKS_B)
+    for m in SALE_MARKS_B:
+        if m in b:
+            return m.decode()
+    return None
+
+
+def is_sale_page(body: bytes) -> bool:
+    return sale_mark(body) is not None
 
 
 # http_probe 结果分布 + 失败原因计数。修复前 sale 恒为 0 且无任何可见信号，
@@ -216,14 +224,18 @@ def is_sale_page(body: bytes) -> bool:
 PROBE_STAT = Counter()
 
 
-def _verdict(data: bytes) -> str:
-    v = "sale" if is_sale_page(data) else "ok"
-    PROBE_STAT[v] += 1
-    return v
+def _verdict(data: bytes) -> tuple[str, str | None]:
+    mk = sale_mark(data)
+    if mk:
+        PROBE_STAT["sale"] += 1
+        return "sale", mk
+    PROBE_STAT["ok"] += 1
+    return "ok", None
 
 
-def http_probe(d: str, v4: list[str]) -> str:
-    """L4 内容层：HTTPS(SNI=d, 不验证书) 优先，失败退 HTTP80。返回 sale / ok / noresp。"""
+def http_probe(d: str, v4: list[str]) -> tuple[str, str | None]:
+    """L4 内容层：HTTPS(SNI=d, 不验证书) 优先，失败退 HTTP80。
+    返回 (verdict, mark)：verdict ∈ sale/ok/noresp，mark 为命中的挂售标记（仅 sale 非空）。"""
     ua = f"GET / HTTP/1.1\r\nHost: {d}\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\nAccept: */*\r\nConnection: close\r\n\r\n".encode()
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
@@ -272,7 +284,7 @@ def http_probe(d: str, v4: list[str]) -> str:
                 except Exception:
                     pass
     PROBE_STAT["noresp"] += 1
-    return "noresp"
+    return "noresp", None
 
 
 def judge(d: str) -> str:
@@ -348,7 +360,7 @@ def main():
     print("scan result:", stat, f"{time.time() - t0:.0f}s")
 
     alive = [d for d, v in res.items() if v == "alive"]
-    parked, tcp_dead, tcp_timeout, sale_pages = {}, [], [], []
+    parked, tcp_dead, tcp_timeout, sale_pages = {}, [], [], {}  # sale_pages: domain -> 命中标记
 
     def work(d):
         addrs = get_addrs(d)
@@ -365,8 +377,9 @@ def main():
         if verdict == "timeout":
             tcp_timeout.append(d)  # 鉴权墙/防火墙 drop：保留
             return
-        if http_probe(d, v4) == "sale":
-            sale_pages.append(d)  # L4 内容层：挂售页 / CDN 源站死错误页
+        verdict, mk = http_probe(d, v4)
+        if verdict == "sale":
+            sale_pages[d] = mk  # L4 内容层：挂售页 / CDN 源站死错误页
 
     with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
@@ -375,7 +388,13 @@ def main():
           f"sale/cdn-dead removed: {len(sale_pages)}, final: {len(final)}")
     print(f"http_probe stat: {dict(PROBE_STAT.most_common())}", flush=True)
     Path("tcp-timeout.txt").write_text("\n".join(sorted(tcp_timeout)) + "\n", encoding="utf-8")
-    Path("sale-pages.txt").write_text("\n".join(sorted(sale_pages)) + "\n", encoding="utf-8")
+    # 带命中标记落盘：区分「挂售/停放」（该剔）与「CF 源站错误页」（可能误杀），便于抽查审计
+    Path("sale-pages.txt").write_text(
+        "\n".join(f"{d}\t{sale_pages[d]}" for d in sorted(sale_pages)) + "\n", encoding="utf-8")
+    mark_stat = {}
+    for mk in sale_pages.values():
+        mark_stat[mk] = mark_stat.get(mk, 0) + 1
+    print(f"sale mark stat: {dict(sorted(mark_stat.items(), key=lambda kv: -kv[1]))}", flush=True)
 
     if len(final) < MIN_ALIVE:
         print(f"gate failed: alive {len(final)} < {MIN_ALIVE}, refusing to write")

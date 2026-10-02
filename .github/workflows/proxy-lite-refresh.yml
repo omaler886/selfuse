@@ -50,6 +50,14 @@ jobs:
           path: parked-ns.txt
           if-no-files-found: ignore
 
+      - name: Upload ns-suspect list (NS hit but page OK, kept — observability only)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ns-suspect
+          path: ns-suspect.txt
+          if-no-files-found: ignore
+
       - name: Upload tcp-timeout list (auth-wall candidates)
         if: always()
         uses: actions/upload-artifact@v4

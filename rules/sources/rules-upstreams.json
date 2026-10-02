@@ -224,6 +224,22 @@
       "custom": {}
     },
     {
+      "name": "proxy-lite",
+      "behavior": "domain",
+      "emit_list": false,
+      "emit_mrs": true,
+      "bounds": [
+        10,
+        3000
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "proxy-lite.domain.txt"
+        ]
+      }
+    },
+    {
       "name": "google",
       "behavior": "domain",
       "emit_list": false,

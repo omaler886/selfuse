@@ -1,0 +1,77 @@
+# proxy-lite 精选分流集 —— 交给 ws 组（替代 geolocation-!cn 大集的精选版）
+# 维护方式：想加一个站就加一行 DOMAIN-SUFFIX；专项集（google/netflix/telegram/ai 等）已有的不用写
+# ---- 开发 ----
+github.com
+githubusercontent.com
+githubassets.com
+github.io
+ghcr.io
+docker.com
+docker.io
+gcr.io
+npmjs.com
+npmjs.org
+gitlab.com
+stackoverflow.com
+jetbrains.com
+# ---- AI 补充（ai 集之外的）----
+perplexity.ai
+poe.com
+huggingface.co
+groq.com
+mistral.ai
+x.ai
+cursor.com
+cursor.sh
+# ---- 社交/社区 ----
+x.com
+instagram.com
+threads.net
+reddit.com
+redd.it
+redditmedia.com
+medium.com
+substack.com
+linux.do
+# ---- 工具/办公 ----
+notion.so
+notion.site
+figma.com
+canva.com
+trello.com
+slack.com
+zoom.us
+1password.com
+bitwarden.com
+proton.me
+protonmail.com
+# ---- 云/托管 ----
+vercel.com
+netlify.com
+workers.dev
+pages.dev
+digitalocean.com
+vultr.com
+linode.com
+herokuapp.com
+# ---- 搜索/知识 ----
+wikipedia.org
+wikimedia.org
+duckduckgo.com
+brave.com
+archive.org
+imgur.com
+# ---- 游戏/平台（games-cn 之外的海外侧）----
+steamcommunity.com
+steampowered.com
+steamstatic.com
+epicgames.com
+unity.com
+unrealengine.com
+hoyoverse.com
+mihoyo.com
+# ---- 流媒体周边（专项集之外的）----
+trakt.tv
+tmdb.org
+themoviedb.org
+tvmaze.com

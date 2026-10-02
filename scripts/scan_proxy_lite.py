@@ -29,11 +29,11 @@ def get_sock():
     return local.s
 
 
-def build_q(name: str, txid: int) -> bytes:
+def build_q(name: str, txid: int, qtype: int = 1) -> bytes:
     q = struct.pack(">HHHHHH", txid, 0x0100, 1, 0, 0, 0)
     for part in name.rstrip(".").split("."):
         q += bytes([len(part)]) + part.encode("idna" if any(ord(c) > 127 for c in part) else "ascii")
-    return q + b"\x00" + struct.pack(">HH", 1, 1)
+    return q + b"\x00" + struct.pack(">HH", qtype, 1)
 
 
 def skip_name(buf: bytes, off: int) -> int:
@@ -130,36 +130,60 @@ def is_park(ip: str) -> bool:
     return False
 
 
-def get_ips(d: str):
+def get_addrs(d: str):
+    """返回 [(addr, family)]：A 与 AAAA 都查，v6-only 站点也拿得到地址。"""
     txid = random.randint(0, 65535)
     s = get_sock()
-    for _ in range(2):
-        try:
-            s.sendto(build_q(d, txid), (random.choice(SERVERS), 53))
-            buf, _ = s.recvfrom(4096)
-            if struct.unpack(">H", buf[0:2])[0] != txid:
-                continue
-            if buf[3] & 0x0F != 0:
-                return []
-            ancount = struct.unpack(">H", buf[6:8])[0]
-            return [".".join(str(b) for b in r) for t, _, _, r in parse_answers(buf, ancount)
-                    if t == 1 and len(r) == 4]
-        except Exception:
-            continue
-    return []
-
-
-def tcp_alive(d: str, ips: list[str]) -> bool:
-    """L3 服务存活：对解析出的 IP 做 443/80 TCP 握手，握手成功才算有服务在跑。"""
-    for ip in ips[:3]:
-        for port in (443, 80):
+    out = []
+    for qtype, fam in ((1, socket.AF_INET), (28, socket.AF_INET6)):
+        for _ in range(2):
             try:
-                s = socket.create_connection((ip, port), timeout=3)
-                s.close()
-                return True
+                s.sendto(build_q(d, txid, qtype), (random.choice(SERVERS), 53))
+                buf, _ = s.recvfrom(4096)
+                if struct.unpack(">H", buf[0:2])[0] != txid:
+                    continue
+                if buf[3] & 0x0F != 0:
+                    break
+                ancount = struct.unpack(">H", buf[6:8])[0]
+                for t, _, _, r in parse_answers(buf, ancount):
+                    if t == qtype and len(r) in (4, 16):
+                        out.append((socket.inet_ntop(fam, r), fam))
+                break
             except Exception:
                 continue
-    return False
+    return out
+
+
+PROBE_PORTS = (443, 80, 8443)
+
+
+def tcp_probe(addrs) -> str:
+    """L3 服务存活，三种结果：
+    alive   —— 任一地址任一端口握手成功（服务在跑；HTTP 鉴权是握手后的事，不影响探测）
+    refused —— 全部收到 RST（端口明确关闭，服务真死了）
+    timeout —— 有超时且无成功（防火墙对数据中心 IP drop SYN：疑似鉴权墙挡探测，保守保留）
+    """
+    refused = True
+    for host, fam in addrs[:4]:
+        for port in PROBE_PORTS:
+            s = None
+            try:
+                s = socket.socket(fam, socket.SOCK_STREAM)
+                s.settimeout(3)
+                s.connect((host, port))
+                return "alive"
+            except ConnectionRefusedError:
+                continue
+            except OSError:
+                refused = False  # 超时/不可达：不能断定死
+                continue
+            finally:
+                if s:
+                    try:
+                        s.close()
+                    except Exception:
+                        pass
+    return "refused" if refused else "timeout"
 
 
 def judge(d: str) -> str:
@@ -238,13 +262,16 @@ def main():
     parked, tcp_dead = {}, []
 
     def work(d):
-        ips = get_ips(d)
-        if any(is_park(ip) for ip in ips):
-            parked[d] = [ip for ip in ips if is_park(ip)]
+        addrs = get_addrs(d)
+        v4 = [ip for ip, _ in addrs if "." in ip]
+        if any(is_park(ip) for ip in v4):
+            parked[d] = [ip for ip in v4 if is_park(ip)]
             return
-        if ips and not tcp_alive(d, ips):
-            tcp_dead.append(d)  # DNS 活但 443/80 都不握手：服务已死
-
+        if addrs:
+            verdict = tcp_probe(addrs)
+            if verdict == "refused":
+                tcp_dead.append(d)  # 全端口 RST：服务确实没了（防火墙 drop 的超时保留）
+    
     with ThreadPoolExecutor(max_workers=200) as ex:
         list(ex.map(work, alive))
     final = sorted(d for d in alive if d not in parked and d not in tcp_dead)

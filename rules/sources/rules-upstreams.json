@@ -50,6 +50,22 @@
       }
     },
     {
+      "name": "jp_domain",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        100,
+        1000
+      ],
+      "sources": [
+        {
+          "kind": "mihomo_payload",
+          "url": "https://raw.githubusercontent.com/liuyisi-afk/mihomo_self_rule/main/jp_domain.yaml"
+        }
+      ],
+      "custom": {}
+    },
+    {
       "name": "private",
       "behavior": "domain",
       "emit_list": false,

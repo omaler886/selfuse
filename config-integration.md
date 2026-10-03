@@ -54,5 +54,5 @@ substore sync push --apply。
 
 ## 3. custom-us 例外说明
 
-含 DOMAIN-KEYWORD（missav/cmliussss），mihomo 的 mrs 装不下，所以只发 classical
+含 DOMAIN-KEYWORD（example-keyword/example-keyword2），mihomo 的 mrs 装不下，所以只发 classical
 `.list`（custom-us.mrs 不会产出）。行为与现在写死的 DOMAIN-KEYWORD 规则一致。

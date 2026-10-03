@@ -197,7 +197,7 @@
       "name": "ai",
       "behavior": "domain",
       "classical": true,
-      "emit_list": true,
+      "emit_list": false,
       "bounds": [
         150,
         1500
@@ -222,7 +222,7 @@
       "name": "proxy",
       "behavior": "domain",
       "classical": true,
-      "emit_list": true,
+      "emit_list": false,
       "bounds": [
         25000,
         45000

@@ -101,6 +101,20 @@ def parse(text: str, kind: str):
             v = line.split("#")[0].strip()
             if "/" in v:
                 out.append(("ip", v))
+        elif kind == "mihomo_payload":
+            if line.startswith("- "):
+                item = line[2:].strip().strip('"').strip("'")
+                low = item.lower()
+                if low.startswith("full:"):
+                    out.append(("exact", norm_domain(low[5:])))
+                elif low.startswith("keyword:"):
+                    out.append(("keyword", low[8:].strip().strip(".")))
+                elif low.startswith("regexp:"):
+                    out.append(("regex", low[7:]))
+                elif low.startswith("+."):
+                    out.append(("suffix", norm_domain(low[2:])))
+                elif norm_domain(low):
+                    out.append(("exact", norm_domain(low)))
         elif kind == "surge":
             if line.startswith(("DOMAIN", "IP-CIDR", "IP-CIDR6")):
                 parts = [p.strip() for p in line.split(",")]
@@ -234,7 +248,7 @@ def build_set(cfg: dict, only: set[str] | None, mihomo: str, singbox: str) -> di
         return None
     behavior = cfg.get("behavior", "domain")
     kinds = {"meta_list", "meta_geoip", "dw_list", "yixuan", "felix",
-             "surge", "plain_domain", "plain_cidr"}
+             "surge", "plain_domain", "plain_cidr", "mihomo_payload"}
     entries: list[tuple[str, str]] = []
     for src in cfg.get("sources", []):
         if src["kind"] not in kinds:

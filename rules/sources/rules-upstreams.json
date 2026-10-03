@@ -490,29 +490,6 @@
       }
     },
     {
-      "name": "custom-us",
-      "behavior": "domain",
-      "classical": true,
-      "emit_list": true,
-      "emit_mrs": false,
-      "bounds": [
-        5,
-        200
-      ],
-      "sources": [],
-      "custom": {
-        "domain": [
-          "us.domain.txt"
-        ],
-        "keyword": [
-          "us.keyword.txt"
-        ],
-        "ip": [
-          "us.ip.txt"
-        ]
-      }
-    },
-    {
       "name": "custom-cdn",
       "behavior": "domain",
       "emit_list": true,
@@ -524,21 +501,6 @@
       "custom": {
         "domain": [
           "cdn.domain.txt"
-        ]
-      }
-    },
-    {
-      "name": "custom-hk",
-      "behavior": "domain",
-      "emit_list": true,
-      "bounds": [
-        1,
-        100
-      ],
-      "sources": [],
-      "custom": {
-        "domain": [
-          "hk.domain.txt"
         ]
       }
     },

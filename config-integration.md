@@ -21,9 +21,9 @@ custom-reject: {<<: *domain, url: "https://raw.githubusercontent.com/omaler886/s
 - RULE-SET,custom-reject,REJECT              # ad-domain 之前或并列
 - RULE-SET,custom-direct,直连                # 现 DOMAIN 直连规则旁边
 - RULE-SET,custom-direct-ip,直连,no-resolve  # 现 IP-CIDR 直连规则旁边
-- RULE-SET,custom-us,美国                    # 现 javdb 等 DOMAIN,美国 规则旁边
+- RULE-SET,custom-us,美国                    # 现 example-us1 等 DOMAIN,美国 规则旁边
 - RULE-SET,custom-cdn,cdn                    # gofile 旁边
-- RULE-SET,custom-hk,香港                    # cityheaven 旁边
+- RULE-SET,custom-hk,香港                    # example-hk 旁边
 - RULE-SET,custom-netflix,netflix            # speedtest 旁边
 - RULE-SET,cn-base,直连                      # RULE-SET,cn,直连 之前
 ```

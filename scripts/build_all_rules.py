@@ -114,7 +114,9 @@ def parse(text: str, kind: str):
                 elif low.startswith("+."):
                     out.append(("suffix", norm_domain(low[2:])))
                 elif norm_domain(low):
-                    out.append(("exact", norm_domain(low)))
+                    # 裸域按「本站+子域」理解(与清单里 205 条 +. 的语义一致):
+                    # exact 会让 www.xxx 漏出集合、落到兜底规则,如 www.mercari.com 进不了日本
+                    out.append(("suffix", norm_domain(low)))
         elif kind == "surge":
             if line.startswith(("DOMAIN", "IP-CIDR", "IP-CIDR6")):
                 parts = [p.strip() for p in line.split(",")]

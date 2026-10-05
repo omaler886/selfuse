@@ -1,3 +1,20 @@
 # jp_domain 自定义增量（上游 liuyisi-afk/mihomo_self_rule 之外）
 # fc2cmadb.com: FC2 广告/CM 域（cm.fc2.com 已 NXDOMAIN，广告域独立成域，fc2.com 后缀覆盖不到）
 fc2cmadb.com
+# FC2 家族补漏（2026-10-05 排查 fc2 系遗漏,官方性依据见注释）:
+#   fc2blog.us  FC2博客美国家庭域,RDAP 与 fc2.com 同实体 FC2SV5(199.48.210.x)
+#   fc2web.com  FC2主页服务,RDAP 实体 FC2SV5(199.48.208.x)
+#   fc2cn.com   FC2中文门户,与 fc2id.com 同段共址(199.34.242.x)
+#   fc2id.com   FC2 统一账号服务(fc2cn/fc2 官站均以它做登录)
+#   fc2bbs.net  FC2 掲示板,fc2id.com 官站自链
+fc2blog.us
+fc2web.com
+fc2cn.com
+fc2id.com
+fc2bbs.net
+# DMM 家族补漏（v2fly domain-list-community data/dmm 官方清单）:
+dmm-extension.com
+dmmapis.com
+# 排查过但不收: fc2cnt.com/net fc2share.net fc2av.com fc2livecam.net dmmrex.com(NXDOMAIN 已死);
+# dmmcdn.com(v2fly 不收、AWS IP 归属不明); dmm.co.jp videomarket.jp(被 jp 后缀覆盖);
+# ad.games.dmm.com(被 dmm.com 后缀覆盖); v2fly dmm @ads 段的通用广告网关(fout/gmossp/microad 等,非 DMM 自有)

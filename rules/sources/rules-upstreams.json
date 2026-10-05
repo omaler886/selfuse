@@ -63,7 +63,11 @@
           "url": "https://raw.githubusercontent.com/liuyisi-afk/mihomo_self_rule/main/jp_domain.yaml"
         }
       ],
-      "custom": {}
+      "custom": {
+        "domain": [
+          "jp.domain.txt"
+        ]
+      }
     },
     {
       "name": "private",

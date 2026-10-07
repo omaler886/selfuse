@@ -24,16 +24,16 @@
       "subtractSources": [],
       "counts": {
         "ads-cn": 221120,
-        "ads-global": 240626,
+        "ads-global": 241370,
         "mihomo-category-ads-all": 910,
         "wuming-adguard-lite": 213463,
-        "wuming-hosts": 257581,
+        "wuming-hosts": 111262,
         "monitoring-block": 134,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
         "exclude:wuming-whitelist": 152,
-        "excluded": 159,
-        "merged": 525422
+        "excluded": 189,
+        "merged": 380492
       }
     },
     "lite": {
@@ -56,12 +56,12 @@
       "counts": {
         "ads-cn": 221120,
         "wuming-adguard-lite": 213463,
-        "wuming-hosts": 257581,
+        "wuming-hosts": 111262,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
         "exclude:wuming-whitelist": 152,
-        "excluded": 159,
-        "merged": 369958
+        "excluded": 189,
+        "merged": 223806
       }
     },
     "global": {
@@ -85,16 +85,16 @@
         "httpdns-cn@ads"
       ],
       "counts": {
-        "ads-global": 240626,
+        "ads-global": 241370,
         "mihomo-category-ads-all": 910,
         "exclude:wuming-whitelist": 152,
         "subtract:ads-cn": 221120,
         "subtract:wuming-adguard-lite": 213463,
-        "subtract:wuming-hosts": 257581,
+        "subtract:wuming-hosts": 111262,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 50,
-        "excluded": 370117,
-        "merged": 155446
+        "excluded": 223995,
+        "merged": 156668
       }
     }
   },
@@ -386,16 +386,16 @@
   },
   "domainCounts": {
     "ads-cn": 221120,
-    "ads-global": 240626,
+    "ads-global": 241370,
     "mihomo-category-ads-all": 910,
     "wuming-adguard-lite": 213463,
-    "wuming-hosts": 257581,
+    "wuming-hosts": 111262,
     "monitoring-block": 134,
     "pcdn": 33,
     "httpdns-cn@ads": 50,
     "exclude:wuming-whitelist": 152,
-    "excluded": 159,
-    "merged": 525422
+    "excluded": 189,
+    "merged": 380492
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

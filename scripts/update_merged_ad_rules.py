@@ -42,7 +42,13 @@ WUMING_RELEASE_NOTE = "Published as a GitHub Releases asset, not a branch file."
 HTTPDNS_MRS_URL = f"{METACUBEX_RAW}/geo/geosite/category-httpdns-cn@ads.mrs"
 MIHOMO_ADS_ALL_MRS_URL = f"{METACUBEX_RAW}/geo/geosite/category-ads-all.mrs"
 WUMING_LITE_URL = f"{WUMING_RELEASES}/adguard_lite.txt"
-WUMING_HOSTS_URL = f"{WUMING_RELEASES}/hosts_rules.txt"
+# [修正 1/3] Wuming 同时发布完整版与 _lite（仅广告过滤）版：
+#   hosts_rules.txt  257,601 条  完整版 —— 混入加密货币生态(binance/coinbase/kraken/metamask/okx…)、
+#                                VPN 站(cyberghostvpn/proxysite/whoer)、域名注册商(name.com)
+#   hosts_lite.txt   111,273 条  精简版（仅广告过滤）
+# 同一流水线的 adguard 侧用的是 adguard_lite.txt（精简版），hosts 侧却用了完整版 —— 两边不对称。
+# 完整版单独贡献 119,686 个「只被单一来源收录」的 apex 条目（占全表 32%），是最大的误杀面。
+WUMING_HOSTS_URL = f"{WUMING_RELEASES}/hosts_lite.txt"
 WUMING_WHITELIST_URL = f"{WUMING_RELEASES}/whitelist.txt"
 
 DOWNLOAD_ATTEMPTS = 3
@@ -52,11 +58,32 @@ DOMAIN_PATTERN = re.compile(r"^(?:[a-z0-9-]+\.)+[a-z0-9-]+$", re.IGNORECASE)
 ADGUARD_HOST_END_PATTERN = re.compile(r"[\^/:?#\[\]@|]")
 URL_HOST_PATTERN = re.compile(r"^\|?https?://([^/:?#]+)", re.IGNORECASE)
 BLOCK_HOSTS = {"0.0.0.0", "127.0.0.1", "::1"}
+# [修正 2/3] 公共服务域名误杀：Wuming 列表里含政务/高校/科研域名，
+# 其中 beian.miit.gov.cn（ICP 备案查询）、cyberpolice.mps.gov.cn（网络违法犯罪举报）、
+# pdns.nudt.edu.cn / ns2.xidian.edu.cn（高校 DNS 服务器）对国内用户是明确误杀。
+# .gov.cn 一律强制排除，不做启发式判断 —— app./www. 这类子域对 .gov.cn 是正常服务子域。
+# 注意：境外高校的 smetrics.* / eloqua.* / trk.* / sgtm.* 等营销追踪子域【保留拦截】。
+PUBLIC_SERVICE_EXCLUDES = {
+    # 中国政务（17）
+    "app.mps.gov.cn", "beian.miit.gov.cn", "beian.mps.gov.cn", "cyberpolice.mps.gov.cn",
+    "dbjb.mps.gov.cn", "ecidcwc.mps.gov.cn", "ecidewc.mps.gov.cn", "ispl.mps.gov.cn",
+    "m.mps.gov.cn", "mail.mps.gov.cn", "miit.gov.cn", "ngo.mps.gov.cn",
+    "www.mps.gov.cn", "ywtb.mps.gov.cn", "ywtbapi.mps.gov.cn", "zlbj.mps.gov.cn",
+    "zwfw.mps.gov.cn",
+    # 中国高校/科研 服务域名（4）
+    "hhbs.hhu.edu.cn", "mipsa.ciae.ac.cn", "sea.net.edu.cn", "xww.bucea.edu.cn",
+    # 中国高校/科研 邮件与 DNS 服务器（5）
+    "mail.issas.ac.cn", "mail.pmo.ac.cn", "mail.siom.ac.cn",
+    "ns.nint.ac.cn", "ns2.xidian.edu.cn", "pdns.nudt.edu.cn",
+    # 境外公共服务（2）
+    "baywest.ac", "comms.supplychain.nhs.uk",
+}
 BUSINESS_DOMAIN_EXCLUDES = {
     "a-api.anthropic.com",
     "a-cdn.anthropic.com",
     "anime-tracker.aruku.kro.kr",
     "contoso-my.sharepoint.com",
+    "elemecdn.com",  # 饿了么 CDN，拦了会导致饿了么图片挂
     "epicgames.com",
     "s.gofile.io",
     "speed.cloudflare.com",
@@ -277,11 +304,16 @@ WUMING_HOSTS_SOURCE = Source(
     repository="Wuming155/AdGuard-Rules",
     upstreams=(
         Upstream(
-            name="Wuming155 hosts rules",
+            name="Wuming155 hosts lite rules",
             url=WUMING_HOSTS_URL,
             repository="Wuming155/AdGuard-Rules",
             note=WUMING_RELEASE_NOTE,
         ),
+    ),
+    note=(
+        "Lite variant only. The full hosts_rules.txt also blocks cryptocurrency exchanges, "
+        "VPN sites, domain registrars and public-service domains, which are false positives "
+        "for an ad-blocking ruleset."
     ),
 )
 MONITORING_SOURCE = Source(
@@ -942,11 +974,23 @@ def build_domain_target(mihomo: str, sing_box: str, target: DomainTarget, cache:
 
     removed_rules = excluded | subtracted
     removed_rules.update(BUSINESS_DOMAIN_EXCLUDES)
+    removed_rules.update(PUBLIC_SERVICE_EXCLUDES)
     rules.difference_update(removed_rules)
     counts["excluded"] = len(removed_rules)
     counts["merged"] = len(rules)
 
-    write_rules(target.text_output, f"# {target.name} ad blocklist for mihomo.", rules)
+    # [修正 3/3] mihomo 的 behavior:domain 规则集里：
+    #   裸域名 foo.com = 精确匹配（只命中 foo.com 本身）
+    #   +.foo.com     = 后缀匹配（命中 foo.com 及其全部子域）
+    # 本流水线的 rules 是「裸域名」集合，sing-box 侧显式声明 domain_suffix（正确），
+    # 但 mihomo 侧直接写裸域名 → 退化成精确匹配，子域全漏。
+    # 上游原始列表表达的全部是「域 + 子域」：
+    #   anti-AD/Cats-Team/Wuming AdGuard 用 `||x^`；Wuming hosts 用 `0.0.0.0 x`；
+    #   Hagezi `wildcard/*-onlydomains.txt` 与 `*.x` 版条目数完全相同；
+    #   MetaCubeX category-ads-all.mrs 有 748/910 条带 `+.`。
+    # 修法：只在 mihomo 文本产出补 +.，sing-box 路径保持裸域名（它自己声明 domain_suffix）。
+    mihomo_rules = {"+." + rule for rule in rules}
+    write_rules(target.text_output, f"# {target.name} ad blocklist for mihomo.", mihomo_rules)
     copy_outputs(target.text_output, target.text_aliases)
     convert_ruleset(mihomo, "domain", "text", target.text_output, target.mrs_output)
     copy_outputs(target.mrs_output, target.mrs_aliases)

@@ -13,7 +13,7 @@ from scripts import update_merged_ad_rules as rules
 
 WUMING_SOURCES = (
     (rules.WUMING_LITE_SOURCE, "adguard_lite.txt"),
-    (rules.WUMING_HOSTS_SOURCE, "hosts_rules.txt"),
+    (rules.WUMING_HOSTS_SOURCE, "hosts_lite.txt"),
     (rules.WUMING_WHITELIST_SOURCE, "whitelist.txt"),
 )
 

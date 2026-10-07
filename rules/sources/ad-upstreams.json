@@ -248,15 +248,15 @@
       "branch": null,
       "path": null,
       "localPath": null,
-      "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/hosts_rules.txt",
-      "note": null,
+      "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/hosts_lite.txt",
+      "note": "Lite variant only. The full hosts_rules.txt also blocks cryptocurrency exchanges, VPN sites, domain registrars and public-service domains, which are false positives for an ad-blocking ruleset.",
       "upstreams": [
         {
-          "name": "Wuming155 hosts rules",
+          "name": "Wuming155 hosts lite rules",
           "repository": "Wuming155/AdGuard-Rules",
           "branch": null,
           "path": null,
-          "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/hosts_rules.txt",
+          "rawUrl": "https://github.com/Wuming155/AdGuard-Rules/releases/latest/download/hosts_lite.txt",
           "note": "Published as a GitHub Releases asset, not a branch file."
         }
       ]

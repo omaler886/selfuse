@@ -1,5 +1,5 @@
 {
- "cn": 130713,
+ "cn": 130699,
  "cn_ip": 20004,
  "jp_domain": 214,
  "private": 127,
@@ -8,7 +8,7 @@
  "google-cn": 137,
  "apple-cn": 244,
  "microsoft-cn": 189,
- "trackerslist": 100,
+ "trackerslist": 101,
  "ntp": 115,
  "ai": 205,
  "proxy": 29934,

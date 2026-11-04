@@ -23,17 +23,17 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 230691,
-        "ads-global": 290255,
+        "ads-cn": 230906,
+        "ads-global": 296839,
         "mihomo-category-ads-all": 904,
-        "wuming-adguard-lite": 221763,
+        "wuming-adguard-lite": 223358,
         "wuming-hosts": 112202,
         "monitoring-block": 134,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
         "exclude:wuming-whitelist": 154,
         "excluded": 191,
-        "merged": 435256
+        "merged": 437725
       }
     },
     "lite": {
@@ -54,14 +54,14 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 230691,
-        "wuming-adguard-lite": 221763,
+        "ads-cn": 230906,
+        "wuming-adguard-lite": 223358,
         "wuming-hosts": 112202,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
         "exclude:wuming-whitelist": 154,
         "excluded": 191,
-        "merged": 234193
+        "merged": 233653
       }
     },
     "global": {
@@ -85,16 +85,16 @@
         "httpdns-cn@ads"
       ],
       "counts": {
-        "ads-global": 290255,
+        "ads-global": 296839,
         "mihomo-category-ads-all": 904,
         "exclude:wuming-whitelist": 154,
-        "subtract:ads-cn": 230691,
-        "subtract:wuming-adguard-lite": 221763,
+        "subtract:ads-cn": 230906,
+        "subtract:wuming-adguard-lite": 223358,
         "subtract:wuming-hosts": 112202,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 50,
-        "excluded": 234384,
-        "merged": 201045
+        "excluded": 233844,
+        "merged": 204054
       }
     }
   },
@@ -385,17 +385,17 @@
     "global": "global.mrs subtracts lite source domains to avoid China/PCDN overlap."
   },
   "domainCounts": {
-    "ads-cn": 230691,
-    "ads-global": 290255,
+    "ads-cn": 230906,
+    "ads-global": 296839,
     "mihomo-category-ads-all": 904,
-    "wuming-adguard-lite": 221763,
+    "wuming-adguard-lite": 223358,
     "wuming-hosts": 112202,
     "monitoring-block": 134,
     "pcdn": 33,
     "httpdns-cn@ads": 50,
     "exclude:wuming-whitelist": 154,
     "excluded": 191,
-    "merged": 435256
+    "merged": 437725
   },
   "ipCounts": {
     "monitoring-block-ip": 2,

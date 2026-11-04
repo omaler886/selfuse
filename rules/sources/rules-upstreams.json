@@ -537,6 +537,21 @@
           "reject.domain.txt"
         ]
       }
+    },
+    {
+      "name": "dextrack",
+      "behavior": "domain",
+      "emit_list": false,
+      "bounds": [
+        1,
+        200
+      ],
+      "sources": [],
+      "custom": {
+        "domain": [
+          "dextrack-curated.txt"
+        ]
+      }
     }
   ]
 }

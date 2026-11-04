@@ -1,0 +1,41 @@
+# dextrack — 本机 dex 实证拦截清单
+# 来源: 2026-11-04 从小米广告 SDK(sdkconfig.ad / monitor-check.ad)、Mi Stat 埋点及
+#       反诈/风控 SDK 提取的域名, 与 selfuse lite 集(sing-box match / decompile /
+#       ad-lite-fixed.list 三通道比对)逐一核对, 确认其中 10 个不在 lite 内。
+# 语义: DOMAIN-SUFFIX(含全部子域); 与 lite 重叠的条目由构建期 suffix 覆盖去重自动剔除。
+# 定位: 独立小集, 不合并进 lite/full, 每日随仓库工作流重建。
+
+# ---- 广告 SDK / 投放 (13) ----
+ad.xiaomi.com
+ad.intl.xiaomi.com
+ad.mi.com
+admob.xiaomi.com
+ad1.xiaomi.com
+adinfo.ad.xiaomi.com
+globalapi.ad.xiaomi.com
+globalconfig.ad.xiaomi.com
+ssp.ad.xiaomi.com
+new.api.ad.xiaomi.com
+track.ad.xiaomi.com
+cdn.ad.xiaomi.com
+e.ad.xiaomi.com
+
+# ---- 统计 / 埋点 OneTrack / Mi Stat (11) ----
+mistat.xiaomi.com
+mistat.intl.xiaomi.com
+mistat.india.miui.com
+mistat.rus.miui.com
+tracking.miui.com
+tracking.intl.miui.com
+tracking.rus.miui.com
+track.miui.com
+stats.xiaomi.com
+stats.miui.com
+analytics.ad.xiaomi.com
+
+# ---- 安全中心回传 / 反诈 / 风控 / 遥测 (5) ----
+flash.sec.miui.com
+fraud-detection.engine.miui.com
+eps.caict.ac.cn
+gateway-papa.cloud.weizhi.com
+dm.wo.com.cn

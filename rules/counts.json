@@ -1,6 +1,6 @@
 {
  "cn": 129550,
- "cn_ip": 20080,
+ "cn_ip": 20085,
  "jp_domain": 214,
  "private": 129,
  "private-ip": 28,
@@ -8,13 +8,13 @@
  "google-cn": 137,
  "apple-cn": 245,
  "microsoft-cn": 189,
- "trackerslist": 103,
+ "trackerslist": 104,
  "ntp": 115,
  "ai": 229,
- "proxy": 29992,
+ "proxy": 29997,
  "proxy-lite": 25891,
  "google": 845,
- "google_ip": 8559,
+ "google_ip": 8426,
  "telegram": 21,
  "telegramip": 12,
  "netflix": 26,
@@ -29,5 +29,6 @@
  "custom-direct-ip": 1,
  "custom-cdn": 1,
  "custom-netflix": 2,
- "custom-reject": 3
+ "custom-reject": 3,
+ "dextrack": 20
 }

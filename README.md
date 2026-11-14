@@ -32,7 +32,7 @@
 | `wuming-hosts` | `Wuming155/AdGuard-Rules` GitHub Releases | `releases/latest/download/hosts_rules.txt` |
 | `wuming-whitelist` | `Wuming155/AdGuard-Rules` GitHub Releases | `releases/latest/download/whitelist.txt`，用于从合并结果扣除例外 |
 | `pcdn` | `omaler886/selfuse@main` | `pcdn.mrs`，由 `rules/sources/pcdn-curated.txt` 生成 |
-| `monitoring-block` | `omaler886/selfuse@main` | `monitoring-block.mrs`，含 CocoaDuck AntiAntiFraud 和本仓库精选规则 |
+| `monitoring-block` | `omaler886/selfuse@main` | `monitoring-block.mrs`，由本仓库精选规则和 hagezi OEM 遥测上游列表生成 |
 
 Wuming155 自 2026-09-01 起将规则移至 GitHub Releases，旧的 `main/dist` 地址已失效。上游 README 有再分发限制提示；公开托管前应确认使用方式符合上游要求。
 

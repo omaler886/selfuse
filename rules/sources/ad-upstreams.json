@@ -274,14 +274,6 @@
       "note": null,
       "upstreams": [
         {
-          "name": "CocoaDuck AntiAntiFraud",
-          "repository": "CocoaDuck/Snippets",
-          "branch": "master",
-          "path": "MihomoYAML/Source/Addition/AntiAntiFraud.yaml",
-          "rawUrl": "https://codeberg.org/CocoaDuck/Snippets/raw/master/MihomoYAML/Source/Addition/AntiAntiFraud.yaml",
-          "note": null
-        },
-        {
           "name": "selfuse curated monitoring blocklist",
           "repository": "omaler886/selfuse",
           "branch": "main",

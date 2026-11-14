@@ -328,13 +328,6 @@ MONITORING_SOURCE = Source(
     source_path="monitoring-block.mrs",
     upstreams=(
         Upstream(
-            name="CocoaDuck AntiAntiFraud",
-            url="https://codeberg.org/CocoaDuck/Snippets/raw/master/MihomoYAML/Source/Addition/AntiAntiFraud.yaml",
-            repository="CocoaDuck/Snippets",
-            branch="master",
-            path="MihomoYAML/Source/Addition/AntiAntiFraud.yaml",
-        ),
-        Upstream(
             name="selfuse curated monitoring blocklist",
             url=f"{SELFUSE_RAW}/rules/sources/monitoring-block-curated.txt",
             repository="omaler886/selfuse",

@@ -18,7 +18,6 @@ DOMAIN_MRS = ROOT / "monitoring-block.mrs"
 IP_MRS = ROOT / "monitoring-block-ip.mrs"
 
 UPSTREAM_DOMAIN_URLS = [
-    "https://codeberg.org/CocoaDuck/Snippets/raw/master/MihomoYAML/Source/Addition/AntiAntiFraud.yaml",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.xiaomi-onlydomains.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.huawei-onlydomains.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/native.oppo-realme-onlydomains.txt",
@@ -182,7 +181,7 @@ def read_upstream_domains() -> set[str]:
             if not domain:
                 continue
 
-            if "AntiAntiFraud.yaml" in url or OEM_TELEMETRY_PATTERN.search(domain):
+            if OEM_TELEMETRY_PATTERN.search(domain):
                 domains.add(domain)
 
     return domains

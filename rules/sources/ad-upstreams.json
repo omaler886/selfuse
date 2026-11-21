@@ -23,17 +23,17 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 234728,
-        "ads-global": 310556,
+        "ads-cn": 235058,
+        "ads-global": 311027,
         "mihomo-category-ads-all": 909,
-        "wuming-adguard-lite": 227190,
-        "wuming-hosts": 112256,
-        "monitoring-block": 155,
+        "wuming-adguard-lite": 227550,
+        "wuming-hosts": 113183,
+        "monitoring-block": 156,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
-        "exclude:wuming-whitelist": 153,
-        "excluded": 188,
-        "merged": 454745
+        "exclude:wuming-whitelist": 127,
+        "excluded": 162,
+        "merged": 455261
       }
     },
     "lite": {
@@ -54,14 +54,14 @@
       ],
       "subtractSources": [],
       "counts": {
-        "ads-cn": 234728,
-        "wuming-adguard-lite": 227190,
-        "wuming-hosts": 112256,
+        "ads-cn": 235058,
+        "wuming-adguard-lite": 227550,
+        "wuming-hosts": 113183,
         "pcdn": 33,
         "httpdns-cn@ads": 50,
-        "exclude:wuming-whitelist": 153,
-        "excluded": 188,
-        "merged": 237592
+        "exclude:wuming-whitelist": 127,
+        "excluded": 162,
+        "merged": 237894
       }
     },
     "global": {
@@ -85,16 +85,16 @@
         "httpdns-cn@ads"
       ],
       "counts": {
-        "ads-global": 310556,
+        "ads-global": 311027,
         "mihomo-category-ads-all": 909,
-        "exclude:wuming-whitelist": 153,
-        "subtract:ads-cn": 234728,
-        "subtract:wuming-adguard-lite": 227190,
-        "subtract:wuming-hosts": 112256,
+        "exclude:wuming-whitelist": 127,
+        "subtract:ads-cn": 235058,
+        "subtract:wuming-adguard-lite": 227550,
+        "subtract:wuming-hosts": 113183,
         "subtract:pcdn": 33,
         "subtract:httpdns-cn@ads": 50,
-        "excluded": 237780,
-        "merged": 217135
+        "excluded": 238056,
+        "merged": 217349
       }
     }
   },
@@ -377,17 +377,17 @@
     "global": "global.mrs subtracts lite source domains to avoid China/PCDN overlap."
   },
   "domainCounts": {
-    "ads-cn": 234728,
-    "ads-global": 310556,
+    "ads-cn": 235058,
+    "ads-global": 311027,
     "mihomo-category-ads-all": 909,
-    "wuming-adguard-lite": 227190,
-    "wuming-hosts": 112256,
-    "monitoring-block": 155,
+    "wuming-adguard-lite": 227550,
+    "wuming-hosts": 113183,
+    "monitoring-block": 156,
     "pcdn": 33,
     "httpdns-cn@ads": 50,
-    "exclude:wuming-whitelist": 153,
-    "excluded": 188,
-    "merged": 454745
+    "exclude:wuming-whitelist": 127,
+    "excluded": 162,
+    "merged": 455261
   },
   "ipCounts": {
     "monitoring-block-ip": 2,
